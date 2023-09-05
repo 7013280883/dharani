@@ -174,61 +174,20 @@ public class bookSlotController {
         System.out.println("Date:"+date);
         LocalDate d1= LocalDate.parse(date);
         System.out.println("D1:"+d1);
-        String d2=d1.format(dtf1);
-        System.out.println("D2:"+ d1.format(dtf1));
+//        DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        String ld1 = formatterLocalDate.format(d1);
+//        System.out.println("LocalDate:"+ld1);
+
         model.addAttribute("slots", slotListed);
         model.addAttribute("slots", slotListed);
-        model.addAttribute("date", d2);
+        model.addAttribute("date", date);
         model.addAttribute("courts", courtRepository.findAll());
         return "customer/bookSlotUser";
     }
-//    @GetMapping("/bookSlot")
-//    public String getSlots(Model model, @RequestParam(name = "date", defaultValue = "") String date, HttpSession session){
-//        if (date.equals("")){
-//            date = LocalDate.now().format(dtf);
-//        }
-//        LocalDate dateModified = LocalDate.of(Integer.parseInt(date.split("-")[0]),Integer.parseInt(date.split("-")[1]),Integer.parseInt(date.split("-")[2]) );
-//        SpecialDates specialDate = specialDatesRepository.findByDate(date);
-//        String dayType = "REGL";
-//        System.out.println(dateModified.getDayOfWeek());
-//        if (!(specialDate == null)){
-//            dayType = specialDate.getDayType();
-//        } else if (dateModified.getDayOfWeek().equals(DayOfWeek.SATURDAY) ||dateModified.getDayOfWeek().equals(DayOfWeek.SUNDAY) ) {
-//            dayType = "WEND";
-//        }
-//        List<Slot> slots = slotRepository.findByDayTypeOrderByStartHourAsc(dayType);
-//        List<Map<String, java.io.Serializable>> slotListed = new ArrayList<Map<String, java.io.Serializable>>();
-//        for (Slot slot : slots){
-//            Map<String, java.io.Serializable> slotMap = slot.getDict();
-//            String statusColor = "green";
-//            String status = "Open";
-//            List<BookSlot> bookSlots = bookSlotRepository.findBySlotCodeAndGameDate(slot.getSlotCode(), dateModified);
-//            if (!bookSlots.isEmpty()){
-//                statusColor = "yellow";
-//                status = "Other "+ bookSlots.size()+" users also requested";
-//
-//                Map user = (Map) session.getAttribute("user");
-//                BookSlot bookSlot1 = bookSlotRepository.findByGameDateAndSlotCodeAndBookedBy(dateModified,slot.getSlotCode(),user.get("mobileNo").toString()  );
-//                if (bookSlot1 != null){
-//                    statusColor = "blue";
-//                    status = "You have already placed a request";
-//                }
-//            }
-//
-//            slotMap.putIfAbsent("status",status);
-//            slotMap.putIfAbsent("statusColor",statusColor);
-//            slotListed.add(slotMap);
-//        }
-//        System.out.println(slots);
-//        model.addAttribute("slots", slotListed);
-//        model.addAttribute("date", date);
-//        model.addAttribute("courts", courtRepository.findAll());
-//        return "customer/bookSlotUser";
-//    }
-
     @RequestMapping("/myRequests")
     public <bookSlot> String myRequests(Model model, HttpSession session) throws ParseException {
         Map user = (Map) session.getAttribute("user");
+        System.out.println("User:"+user);
         List<BookSlot> bookSlots = bookSlotRepository.findByBookedByOrderByGameDateDesc(user.get("mobileNo").toString());
         Iterable<Court> courts = courtRepository.findAll();
         List<Map> bookslotsMap = new ArrayList<>();
@@ -242,12 +201,12 @@ public class bookSlotController {
                 statusColor = "danger";
             }
 
-
+String a="";
             LocalDate date = bookSlot.getGameDate();
-            //String gameMode=bookSlot.getGameMode();
-            //char a=gameMode.charAt(0);
+            String gameMode=bookSlot.getGameMode();
             System.out.println("Raam:" + date);
-           // System.out.println("Raam:" + gameMode);
+            System.out.println("Raam:" + gameMode);
+             a=String.valueOf(gameMode.charAt(0));
             System.out.println("date:" + date);
             DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             String DateinText = date.format(formatters);
@@ -257,7 +216,7 @@ public class bookSlotController {
                 bookslotMap.put("court", court);
                 bookslotMap.put("gameDateMod", DateinText);
                 bookslotMap.put("slot", slotRepository.findBySlotCode(bookSlot.getSlotCode()));
-           // bookslotMap.put("a", a);
+            bookslotMap.put("a", a.toUpperCase());
 
                 bookslotsMap.add(bookslotMap);
             }

@@ -61,16 +61,19 @@ public interface BookSlotRepository extends CrudRepository<BookSlot, Integer> {
     List findByGameDateBetweenAndConfirmStatusAndGameModeOrderByIdAsc(LocalDate fromDate, LocalDate toDate, String status, String gameMode);
 
     List findByGameDateBetweenAndConfirmStatusAndBookedByOrderByIdAsc(LocalDate fromDate, LocalDate toDate, String status, String gameMode);
-    @Query("select * from book_slot where booked_by=?1,book_date=?2,game_date=?3.game_mode=?4,confirm_status")
-    List<BookSlot> findByBookedByAndGameDateBetweenAndGameModeAndConfirmStatus(String mobileNo,LocalDate bookDate, LocalDate gameDate,String gameMode,String confirmStatus);
+//    @Query("select * from book_slot where booked_by=?1,book_date=?2,game_date=?3.game_mode=?4,confirm_status")
+//    List<BookSlot> findByBookedByAndGameDateBetweenAndGameModeAndConfirmStatus(String mobileNo,LocalDate bookDate, LocalDate gameDate,String gameMode,String confirmStatus);
     List findByGameDateBetweenAndBookedByOrderByIdAsc(LocalDate fromDate, LocalDate toDate, String bookedBy);
     List findByGameDateBetweenAndBookedByAndConfirmStatusOrderByIdAsc(LocalDate fromDate, LocalDate toDate, String bookedBy,String confirmSatus);
 
     List<BookSlot>findByGameDateBetween(LocalDate fromDate, LocalDate toDate);
     List findByGameDateBetweenAndConfirmStatusAndGameNameAndGameModeOrderByIdAsc(LocalDate fromDate, LocalDate toDate,String status,String name,String gameMode);
     List findByGameDateBetweenAndConfirmStatusOrderByIdAsc(LocalDate fromDate, LocalDate toDate,String status);
-    List findByGameDateBetweenAndGameModeOrderByIdAsc(LocalDate fromDate, LocalDate toDate,String gameMode);
+   // List findByGameDateBetweenAndGameModeOrderByIdAsc(LocalDate fromDate, LocalDate toDate,String gameMode);
     List findByGameDateBetweenAndGameNameAndGameModeOrderByIdAsc(LocalDate fromDate, LocalDate toDate,String name,String gameMode);
     List findByGameDateBetweenAndConfirmStatusAndGameNameOrderByIdAsc(LocalDate fromDate, LocalDate toDate,String status,String name);
     List findByGameDateBetweenAndBookedByOrderByGameDateAsc(LocalDate fromDate, LocalDate toDate,String mobileNo);
+    List findByGameDateBetweenAndGameModeOrderByIdAsc(LocalDate fromDate, LocalDate toDate,String gameMode);
+    List findByGameDateBetweenAndBookedByAndGameModeAndConfirmStatusOrderByIdAsc(LocalDate fromDate, LocalDate toDate,String mobileNo,String gameMode,String status);
+
 }

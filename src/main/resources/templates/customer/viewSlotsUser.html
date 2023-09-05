@@ -75,7 +75,7 @@
             </select>
         </div>
         <div class="col">
-            <label for="bookingStatus">Game Mode</label>
+            <label for="bookingStatus">Booking Status</label>
             <select id="bookingStatus" class="form-control" name="username">
                 <option value="all">all</option>
                 <option value="accepted">Accepted</option>
@@ -133,6 +133,16 @@
 
 </div>
     <script>
+<!--     var d = new Date();-->
+<!--    var year = d.getFullYear();-->
+<!--    var month = d.getMonth();-->
+<!--    var day = d.getDate();-->
+
+<!--    var fulldate = new Date(year + 2, month, day);-->
+
+<!--    var toDate = fulldate.toISOString().slice(0, 10);-->
+
+<!--    $("#txtToDate").val(toDate);-->
      $('#fromDate').val(new Date().toISOString().slice(0, 10));
       $('#toDate').val(new Date().toISOString().slice(0, 10));
  $('#getData').click(function() {

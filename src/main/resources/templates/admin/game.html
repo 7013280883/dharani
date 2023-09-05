@@ -240,8 +240,18 @@ body {
 
     </div>
     <script>
-     $('#fromDate').val(new Date().toISOString().slice(0, 10));
-      $('#toDate').val(new Date().toISOString().slice(0, 10));
+    var d = new Date();
+    var year = d.getFullYear();
+    var month = d.getMonth();
+    var day = d.getDate();
+
+    var fulldate = new Date(year + 2, month, day);
+ var fulldate1 = new Date(year - 1, month, day);
+    var toDate = fulldate.toISOString().slice(0, 10);
+var toDate1 = fulldate1.toISOString().slice(0, 10);
+    $("#txtToDate").val(toDate);
+     $('#fromDate').val(toDate1);
+      $('#toDate').val(toDate);
  $('#getData').click(function() {
 
 var selectedValue = $("#name").val();
