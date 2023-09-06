@@ -236,6 +236,7 @@ body {
 
                 </tbody>
             </table>
+            <h4><center> <p id="notfound" style="display:none;"><font color="blue">---------No Records found---------</font> </p></center></h4>
         </div>
 
     </div>
@@ -300,7 +301,15 @@ const newTime = time.split("T")[1];
 
       tr += '<tr><td>' + newDate + '</td><td>' + item.gameName + '</td><td>' + item.courtCode + '</td><td>' + item.startTime + '</td><td>' + item.endTime + '</td><td>' + item.slotCode + '</td><td>' + item.gameMode + '</td><td>' + item.confirmStatus + '</td><td>' + item.bookedBy + '</td><td>' + bookedDate1 + '</td><td>' + newTime + '</td><td>' + item.approvedBy + '</td><td>' + item.remarksByUser + '</td><td>' + item.remarksByAdmin + '</td></tr>';
     });
-$('#purchaseTable').append(tr);
+console.log(tr);
+   $('#purchaseTable').append(tr);
+   $('#notfound').hide();
+const isEmpty = document.querySelectorAll("#purchaseTable tr").length <= 1;
+if(isEmpty==true){
+
+$('#notfound').show();
+}
+
 
 
 }

@@ -6,21 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="000b03e8-8eb7-4df3-aafe-718948a2d934" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/bookSlotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/bookSlotController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/slotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/slotController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/BookSlotRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/BookSlotRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/game.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/game.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/viewSlots.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/viewSlots.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/customer/myRequests.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/customer/myRequests.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/customer/viewSlotsUser.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/customer/viewSlotsUser.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/bookSlotController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/bookSlotController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/slotController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/slotController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/repositories/BookSlotRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/repositories/BookSlotRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/admin/game.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/admin/game.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/admin/viewSlots.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/admin/viewSlots.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/customer/myRequests.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/customer/myRequests.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/customer/viewSlotsUser.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/customer/viewSlotsUser.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +38,7 @@
     "CourtReserverplus.wasFacetEverAdded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/panda project/Raam/Inv-Pdf"
+    "last_opened_file_path": "C:/panda project/BookMyCourtVer1"
   }
 }]]></component>
   <component name="RecentsManager">
