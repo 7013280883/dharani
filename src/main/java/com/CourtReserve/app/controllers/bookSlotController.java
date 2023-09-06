@@ -67,6 +67,7 @@ public class bookSlotController {
             date = LocalDate.now().format(dtf);
             System.out.println("RAaam1:"+date);
         }
+
         LocalDate dateModified = LocalDate.of(Integer.parseInt(date.split("-")[0]),Integer.parseInt(date.split("-")[1]),Integer.parseInt(date.split("-")[2]) );
         SpecialDates specialDate = specialDatesRepository.findByDate(date);
         System.out.println("RAaam2:"+specialDate);
@@ -174,13 +175,13 @@ public class bookSlotController {
         System.out.println("Date:"+date);
         LocalDate d1= LocalDate.parse(date);
         System.out.println("D1:"+d1);
-//        DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//        String ld1 = formatterLocalDate.format(d1);
-//        System.out.println("LocalDate:"+ld1);
+        DateTimeFormatter formatterLocalDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String ld1 = formatterLocalDate.format(d1);
+        System.out.println("LocalDate:"+ld1);
 
         model.addAttribute("slots", slotListed);
         model.addAttribute("slots", slotListed);
-        model.addAttribute("date", date);
+        model.addAttribute("date", ld1);
         model.addAttribute("courts", courtRepository.findAll());
         return "customer/bookSlotUser";
     }
