@@ -47,6 +47,8 @@ public class courtController {
         }
         court.setCode(code);
         court.setName(court.getName().toString().split("-")[1]);
+        court.setStartDate("2023-08-01");
+        court.setEndDate("2023-12-31");
         courtRepository.save(court);
 
         return "redirect:/courts";

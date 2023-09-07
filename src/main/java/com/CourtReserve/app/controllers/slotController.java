@@ -10,6 +10,7 @@ import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -288,7 +289,13 @@ public class slotController {
         HSSFRow Header = sheet.createRow(0);
         int headercellStart = 0;
         String header[] ={"gameDate","gameName","courtCode","startTime","endTime","slotCode","gameMode","confirmStatus","bookedBy","bookTime","approvedBy","RemarksByUser","RemarksByAdmin"};
-        DownloadCsvReport.getCsvReportDownload(response, header, list, "slot_data.csv");
+        if(list.isEmpty()){
+            System.out.println("stophere");
+            //response1.putIfAbsent("msg","No Records Found");
+            //response1.put("status", 202);
+        }else {
+            DownloadCsvReport.getCsvReportDownload(response, header, list, "slot_data.csv");
+        }
 //        for (String i : header) {
 //            HSSFCellStyle style = workbook.createCellStyle();
 //            style.setFillBackgroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
@@ -331,7 +338,11 @@ public class slotController {
 //        }
 
 
-        return (ResponseEntity) ResponseEntity.status(203);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/slotViewData");
+
+        return new ResponseEntity<byte []>(null,headers,HttpStatus.FOUND);
+
 
     }
     @Autowired
@@ -363,15 +374,27 @@ public class slotController {
         }
         WebContext context = new WebContext(request, response, request.getServletContext());
         context.setVariable("list", list);
-        String finalhtml = springTemplateEngine.process("admin/slotpdfWeb",context);
-        ByteArrayOutputStream ops = new ByteArrayOutputStream();
-        ITextRenderer renderer = new ITextRenderer();
-        System.out.println(finalhtml);
-        renderer.setDocumentFromString(finalhtml);
-        renderer.layout();
-        renderer.createPDF(ops, false);
-        renderer.finishPDF();
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+fromDate.toString()+"-"+toDate.toString()+".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+        if(list.isEmpty()){
+            System.out.println("stophere");
+            //response1.putIfAbsent("msg","No Records Found");
+            //response1.put("status", 202);
+        }else {
+            String finalhtml = springTemplateEngine.process("admin/slotpdfWeb", context);
+            ByteArrayOutputStream ops = new ByteArrayOutputStream();
+            ITextRenderer renderer = new ITextRenderer();
+            System.out.println(finalhtml);
+            renderer.setDocumentFromString(finalhtml);
+            renderer.layout();
+            renderer.createPDF(ops, false);
+            renderer.finishPDF();
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fromDate.toString() + "-" + toDate.toString() + ".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/slotViewData");
+
+        return new ResponseEntity<byte []>(null,headers,HttpStatus.FOUND);
+
+
 
     }
 

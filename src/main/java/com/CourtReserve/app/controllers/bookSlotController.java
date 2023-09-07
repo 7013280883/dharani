@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -181,7 +182,7 @@ public class bookSlotController {
 
         model.addAttribute("slots", slotListed);
         model.addAttribute("slots", slotListed);
-        model.addAttribute("date", ld1);
+        model.addAttribute("date", date);
         model.addAttribute("courts", courtRepository.findAll());
         return "customer/bookSlotUser";
     }
@@ -189,7 +190,7 @@ public class bookSlotController {
     public <bookSlot> String myRequests(Model model, HttpSession session) throws ParseException {
         Map user = (Map) session.getAttribute("user");
         System.out.println("User:"+user);
-        List<BookSlot> bookSlots = bookSlotRepository.findByBookedByOrderByGameDateDesc(user.get("mobileNo").toString());
+        List<BookSlot> bookSlots  =  bookSlotRepository.findByBookedByAndGameDateOrGameDateAfterAndBookedByOrderByGameDateAscCourtCodeAscStartTimeAsc(user.get("mobileNo").toString(),LocalDate.now(),LocalDate.now(),user.get("mobileNo").toString());System.out.println("BookSlots:" + bookSlots);
         Iterable<Court> courts = courtRepository.findAll();
         List<Map> bookslotsMap = new ArrayList<>();
         for (BookSlot bookSlot: bookSlots) {
@@ -292,6 +293,7 @@ String a="";
     SpringTemplateEngine springTemplateEngine;
     @GetMapping("/slotPdfDataMember")
     public ResponseEntity slotViewPdfOrder(Model model, HttpServletResponse response, HttpServletRequest request) {
+
         String mobileNo = request.getParameter("mobileNo");
         String gameMode = request.getParameter("gameMode");
         String status = request.getParameter("status");
@@ -335,15 +337,29 @@ String a="";
 
         WebContext context = new WebContext(request, response, request.getServletContext());
         context.setVariable("list", list);
-        String finalhtml = springTemplateEngine.process("customer/slotpdfWeb", context);
-        ByteArrayOutputStream ops = new ByteArrayOutputStream();
-        ITextRenderer renderer = new ITextRenderer();
-        System.out.println(finalhtml);
-        renderer.setDocumentFromString(finalhtml);
-        renderer.layout();
-        renderer.createPDF(ops, false);
-        renderer.finishPDF();
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fromDate.toString() + "-" + toDate.toString() + ".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+        if(list.isEmpty()){
+            System.out.println("stophere");
+            //response1.putIfAbsent("msg","No Records Found");
+            //response1.put("status", 202);
+        }else {
+            String finalhtml = springTemplateEngine.process("customer/slotpdfWeb", context);
+            ByteArrayOutputStream ops = new ByteArrayOutputStream();
+            ITextRenderer renderer = new ITextRenderer();
+            System.out.println(finalhtml);
+            renderer.setDocumentFromString(finalhtml);
+            renderer.layout();
+            renderer.createPDF(ops, false);
+            renderer.finishPDF();
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fromDate.toString() + "-" + toDate.toString() + ".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/slotViewDataUser");
+
+        return new ResponseEntity<byte []>(null,headers,HttpStatus.FOUND);
+
+
+
 
     }
 
@@ -370,50 +386,19 @@ String a="";
         HSSFRow Header = sheet.createRow(0);
         int headercellStart = 0;
         String header[] ={"gameDate","gameName","courtCode","startTime","endTime","slotCode","gameMode","confirmStatus","bookedBy","bookTime","approvedBy","RemarksByUser","RemarksByAdmin"};
-        DownloadCsvReport.getCsvReportDownload(response, header, list, "slot_data.csv");
-//        for (String i : header) {
-//            HSSFCellStyle style = workbook.createCellStyle();
-//            style.setFillBackgroundColor(IndexedColors.BRIGHT_GREEN.getIndex());
-//            HSSFCell cell = Header.createCell(headercellStart);
-//            cell.setCellValue(i);
-//            cell.setCellStyle(style);
-//            headercellStart = headercellStart + 1;
-//        }
-//        int rowVal = 1;
-//        for (BookSlot order : list) {
-//            System.out.println("order:"+order);
-//            HSSFRow row = sheet.createRow(rowVal);
-//            int cellval = 0;
-//            User user1 = userRepository.findByMobileNo(body.get("mobileNo"));
-//            for (String i : order.getListValues(user1.getMobileNo())) {
-//                System.out.println("Hi:"+i);
-//                HSSFCell cell = row.createCell(cellval);
-//                cellval= cellval+ 1;
-//
-//                if (cellval == header.length-1 ) {
-//                    cell.setCellValue(i);
-//                }
-//                else{
-//                    cell.setCellValue(i);
-//                }
-//            }
-//
-//            rowVal= rowVal+1;
-//        }
-//        try {
-//
-//            ByteArrayOutputStream ops = new ByteArrayOutputStream();
-//            workbook.write(ops);
-//            workbook.close();
-//
-//
-//            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+fromDate.toString()+"-"+toDate.toString()+".xls").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
-//        }catch (Exception e){
-//
-//        }
+        if(list.isEmpty()){
+            System.out.println("stophere");
+            model.addAttribute("message","Hello World!");
+            //response1.putIfAbsent("msg","No Records Found");
+            //response1.put("status", 202);
+        }else {
+            DownloadCsvReport.getCsvReportDownload(response, header, list, "slot_data.csv");
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/slotViewDataUser");
 
+        return new ResponseEntity<>("Hello World!",headers,HttpStatus.FOUND);
 
-        return (ResponseEntity) ResponseEntity.status(203);
 
     }
 }

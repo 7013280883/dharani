@@ -2,38 +2,192 @@
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Reseting */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #fff;
+     right      : 100%;
+    top       : 100%;
+    position  : right;
+}
+
+.wrapper {
+    max-width: 300px;
+    min-height: 100px;
+    margin: 40px auto;
+    padding: 8px 8px 8px 8px;
+    background-color: #fff;
+    border-radius: 20px;
+    right      : 100%;
+    position  : right;
+    top :100%;
+    box-shadow: 13px 13px 20px #fff, -13px -13px 20px #fff;
+}
+
+.logo {
+    width: 80px;
+    margin: auto;
+}
+
+<!--.logo img {-->
+<!--    width: 100%;-->
+<!--    height: 80px;-->
+<!--    object-fit: cover;-->
+<!--    border-radius: 50%;-->
+<!--    box-shadow: 0px 0px 3px #5f5f5f,-->
+<!--        0px 0px 0px 5px #ecf0f3,-->
+<!--        8px 8px 15px #a7aaa7,-->
+<!--        -8px -8px 15px #fff;-->
+<!--}-->
+
+.wrapper .name {
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: 1.3px;
+    padding-left: 10px;
+    color: blue;
+}
+
+.wrapper .form-field input {
+    width: 100%;
+    display: block;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.2rem;
+    color: #000;
+    padding: 10px 15px 10px 10px;
+    /* border: 1px solid red; */
+}
+
+#courtCode,input#date,#dayType {
+    padding-left: 10px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    box-shadow: inset 8px 8px 8px lightblue, inset -8px -8px 8px lightblue;
+}
+
+.wrapper .form-field .fas {
+    color: #fff;
+}
+
+<!--.wrapper .btn-primary {-->
+<!--    box-shadow: none;-->
+<!--    width: 100%;-->
+<!--    height: 40px;-->
+<!--    background-color: green;-->
+<!--    color: #fff;-->
+<!--    border-radius: 25px;-->
+<!--    box-shadow: 3px 3px 3px #b1b1b1,-->
+<!--        -3px -3px 3px #fff;-->
+<!--    letter-spacing: 1.3px;-->
+<!--}-->
+.btn-primary {
+    box-shadow: none;
+    width: 10%;
+    height: 40px;
+    background-color: green;
+
+    color: #fff;
+    border-radius: 25px;
+    gap :1px;
+    box-shadow: 3px 3px 3px #fff,
+<!--        -3px -3px 3px #fff;-->
+    center-spacing: 2px;
+}
+.btn-secondary {
+    box-shadow: none;
+    width: 20%;
+    height: 40px;
+    background-color: green;
+     float: auto-top;
+    color: #fff;
+    border-radius: 25px;
+    box-shadow: 3px 3px 3px #fff,
+<!--        -3px -3px 3px #fff;-->
+    center-spacing: 0.5px;
+}
+.btn-primary {
+ margin-right: 10px;
+ top:10px;
+   float: right;
+
+}
+
+.btn-secondary {
+ margin-center: 10px;
+ top:20px;
+   float: right;
+}
+
+
+<!--.wrapper .btn:hover {-->
+<!--    background-color: #039BE5;-->
+<!--}-->
+
+.wrapper a {
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: red;
+}
+
+.wrapper a:hover {
+    color: red;
+}
+
+@media(max-width: 380px) {
+    .wrapper {
+        margin: 30px 20px;
+        padding: 40px 15px 15px 15px;
+    }
+}
+</style>
+</head>
 
 <body>
 <!--main content start-->
 <div layout:fragment="content">
     <div class="container">
-        <h1>Special Dates Manage</h1>
-        <hr>
-    <form method="post" action="#">
-        <div class="form-group">
-            <label for="date">Date</label>
-            <input type="date" class="form-control" id="date" name="date">
+        <script th:src="@{js/specialDates.js}"></script>
 
-        </div>
-        <div class="form-group">
-            <label for="courtCode">Court Code</label>
-
-            <select class="form-control" id="courtCode" name="courtCode">
-
-                <option th:each="court : ${courts}" th:value="${court.code}" th:text="${court.code}"></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="dayType">Day Type</label>
-            <select class="form-control" id="dayType" name="dayType">
-                <option th:each="dayType : ${dayTypes}" th:value="${dayType.code}" th:text="${dayType.name}"></option>
-            </select>
-        </div>
+        <h4>SPECIAL DATES MANAGE</h4>
         <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-        <hr>
-        <h1>Special Dates</h1>
+        <form method="post" action="#">
+            <div class="form-field d-flex align-items-center">
+                <label for="date"></label>
+                <input type="date" class="form-control" id="date" name="date">
+
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <label for="courtCode"></label>
+
+                <select class="form-control" id="courtCode" name="courtCode">
+
+                    <option th:each="court : ${courts}" th:value="${court.code}" th:text="${court.code}"></option>
+                </select>
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <label for="dayType"></label>
+                <select class="form-control" id="dayType" name="dayType">
+                    <option th:each="dayType : ${dayTypes}" th:value="${dayType.code}" th:text="${dayType.name}"></option>
+                </select>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" id="clear" class="btn btn-primary" onclick="document.getElementById('inputText').value = ' ' " >Clear</button>
+        </form>
+        <br>
+        <h4>SPECIAL DATES </h4>
         <table class="table">
             <thead>
             <tr>

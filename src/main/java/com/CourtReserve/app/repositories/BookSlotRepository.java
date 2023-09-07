@@ -75,5 +75,5 @@ public interface BookSlotRepository extends CrudRepository<BookSlot, Integer> {
     List findByGameDateBetweenAndBookedByOrderByGameDateAsc(LocalDate fromDate, LocalDate toDate,String mobileNo);
     List findByGameDateBetweenAndGameModeOrderByIdAsc(LocalDate fromDate, LocalDate toDate,String gameMode);
     List findByGameDateBetweenAndBookedByAndGameModeAndConfirmStatusOrderByIdAsc(LocalDate fromDate, LocalDate toDate,String mobileNo,String gameMode,String status);
-
+    List<BookSlot> findByBookedByAndGameDateOrGameDateAfterAndBookedByOrderByGameDateAscCourtCodeAscStartTimeAsc(String mobileNo, LocalDate now, LocalDate now1, String mobileNo1);
 }

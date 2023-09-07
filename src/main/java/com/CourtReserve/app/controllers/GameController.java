@@ -12,6 +12,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -153,16 +154,25 @@ public class GameController {
 
         WebContext context = new WebContext(request, response, request.getServletContext());
         context.setVariable("list", list);
-        String finalhtml = springTemplateEngine.process("customer/gamePdfData",context);
-        ByteArrayOutputStream ops = new ByteArrayOutputStream();
-        ITextRenderer renderer = new ITextRenderer();
-        System.out.println(finalhtml);
-        renderer.setDocumentFromString(finalhtml);
-        renderer.layout();
-        renderer.createPDF(ops, false);
-        renderer.finishPDF();
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+fromDate.toString()+"-"+toDate.toString()+".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+        if(list.isEmpty()){
+            System.out.println("stophere");
+            //response1.putIfAbsent("msg","No Records Found");
+            //response1.put("status", 202);
+        }else {
+            String finalhtml = springTemplateEngine.process("admin/gamePdfData", context);
+            ByteArrayOutputStream ops = new ByteArrayOutputStream();
+            ITextRenderer renderer = new ITextRenderer();
+            System.out.println(finalhtml);
+            renderer.setDocumentFromString(finalhtml);
+            renderer.layout();
+            renderer.createPDF(ops, false);
+            renderer.finishPDF();
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fromDate.toString() + "-" + toDate.toString() + ".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/gameDataUser");
 
+        return new ResponseEntity("No Records Found",headers, HttpStatus.FOUND);
     }
     @GetMapping("/gameExcelDataMember")
     public ResponseEntity slotViewOrder1(HttpSession session, @RequestParam Map<String, String> body, Model model, HttpServletResponse response, HttpServletRequest request) throws Exception {
@@ -198,9 +208,18 @@ public class GameController {
         HSSFRow Header = sheet.createRow(0);
         int headercellStart = 0;
         String header[] ={"gameDate","gameName","courtCode","startTime","endTime","slotCode","gameMode","confirmStatus","bookedBy","bookTime","approvedBy","RemarksByUser","RemarksByAdmin"};
-        DownloadCsvReport.getCsvReportDownload(response, header, list, "game_data.csv");
+        if(list.isEmpty()){
+            System.out.println("stophere");
+            //response1.putIfAbsent("msg","No Records Found");
+            //response1.put("status", 202);
+        }else {
+            DownloadCsvReport.getCsvReportDownload(response, header, list, "game_data.csv");
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/gameDataUser");
 
-        return (ResponseEntity) ResponseEntity.status(203);
+        return new ResponseEntity<byte []>(null,headers,HttpStatus.FOUND);
+
 
     }
 
