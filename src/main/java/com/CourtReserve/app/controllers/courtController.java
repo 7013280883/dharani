@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,11 @@ public class courtController {
     }
 
     @PostMapping("/courts")
-    public String addCourt(@ModelAttribute Court court, Model model){
+    public String addCourt(@ModelAttribute Court court, Model model, HttpServletRequest request){
+        String startdate=request.getParameter("fromDate");
+        String enddate=request.getParameter("toDate");
+        System.out.println(startdate);
+        System.out.println(enddate);
         System.out.println(court);
         List<Court> courts = courtRepository.findByName(court.getName().toString());
         String gameCode = court.getName().split("-")[0] ;
@@ -47,8 +52,8 @@ public class courtController {
         }
         court.setCode(code);
         court.setName(court.getName().toString().split("-")[1]);
-        court.setStartDate("2023-08-01");
-        court.setEndDate("2023-12-31");
+        court.setStartDate(startdate);
+        court.setEndDate(enddate);
         courtRepository.save(court);
 
         return "redirect:/courts";

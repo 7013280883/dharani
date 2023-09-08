@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+  <title></title>
+  <style>
+    #username{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  }
+  input#fromDate{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  text-align: center;
+  }
+  input#toDate{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  text-align: center;
+  }
+  #active{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  }
+  body {
+    margin: 0;   /* Remove body margins */
+}
+.css-serial {
+  counter-reset: serial-number;  /* Set the serial number counter to 0 */
+}
+.css-serial td:first-child:before {
+  counter-increment: serial-number;  /* Increment the serial number counter */
+  content: counter(serial-number);  /* Display the counter */
+}
+
+  </style>
+  <div class="container">
+    <div th:replace="fragments/message :: message_html"></div>
+  </div>
+</head>
+<body style="background-color:Blonde;">
+<div layout:fragment="content">
+  <div class="container">
+    <h4 class = "text-middle"> <font color="#000080 ">
+      <b> USER DATA REPORTS</b> </font></h4>
+    <hr color="blue">
+
+    <div class="row auto-align">
+      <div class="col">
+        <label for="username">Username</label>
+        <select id="username" class="form-control" name="username">
+          <option value="all">all</option>
+          <option th:each="i : ${user}" th:value="${i.userName}"><span th:text="${i.userName}"></span></option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="userType">User Type</label>
+        <select id="userType" class="form-control" name="userType">
+          <option value="all">all</option>
+          <option th:each="i : ${user}" th:value="${i.userType}"><span th:text="${i.userType}"></span></option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="country">Country</label>
+        <select id="country" class="form-control" name="country">
+          <option value="all">all</option>
+          <option th:each="i : ${user}" th:value="${i.country}"><span th:text="${i.country}"></span></option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="referral">Referral</label>
+        <select id="referral" class="form-control" name="referral">
+          <option value="all">all</option>
+          <option th:each="i : ${user}" th:value="${i.referral}"><span th:text="${i.referral}"></span></option>
+        </select>
+      </div>
+
+
+    </div>
+    <br>
+    <div class="box-footer">
+      <button id="getData" class="btn btn-primary">Get Data</button>
+      <button id="pdfDownload" class="btn btn-primary"> Download PDF</button>
+      <button id="downloadExcel" class="btn btn-primary"> Download Excel</button>
+
+    </div>
+
+
+
+    <hr>
+
+    <div class="container">
+      <table class="css-serial" style="width:100%" id="purchaseTable" border=0>
+        <thead>
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col">User Name</th>
+          <th scope="col">User Type</th>
+          <th scope="col">Mobile No</th>
+          <th scope="col">Email Id</th>
+          <th scope="col">Address1</th>
+          <th scope="col">Address2</th>
+          <th scope="col">Address3</th>
+          <th scope="col">Location </th>
+          <th scope="col">Country</th>
+          <th scope="col">Pin Code</th>
+          <th scope="col">Referral</th>
+          <th scope="col">Lost Login</th>
+          <!--                    <th scope="col"> Remarks</th>-->
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+      <h4><center> <p id="notfound" style="display:none;"><font color="blue">---------No Records found---------</font> </p></center></h4>
+    </div>
+
+  </div>
+  <script>
+
+ $('#getData').click(function() {
+
+var userName = $("#username").val();
+//alert(userName);
+var userType = $("#userType").val();
+//alert(userType);
+var country = $("#country").val();
+//alert(country);
+var referral = $("#referral").val();
+//alert(referral);
+$("#purchaseTable tbody tr").remove();
+
+$.ajax({
+async:'false',
+ type: 'POST',
+ url: '/userData',
+      data: {
+     "userName":userName,
+     "userType":userType,
+     "country":country,
+     "referral":referral,
+
+      },
+       success: function(data) {
+
+ const jsonObject = JSON.parse(data);
+    var tr = '';
+    $.each(jsonObject, function(i, item) {
+tr += '<tr><td></td><td>' + item.userName + '</td><td>' + item.userType + '</td><td>' + item.mobileNo + '</td><td>' + item.email + '</td><td>' + item.uadr1 + '</td><td>' + item.uadr2 + '</td><td>' + item.uadr3 + '</td><td>' + item.location + '</td><td>' + item.country + '</td><td>' + item.upincode + '</td><td>' + item.referral + '</td><td>' + item.lastLogin + '</td>tr>';
+    });
+   console.log(tr);
+   $('#purchaseTable').append(tr);
+   $('#notfound').hide();
+const isEmpty = document.querySelectorAll("#purchaseTable tr").length <= 1;
+if(isEmpty==true){
+
+$('#notfound').show();
+}
+
+}
+});
+});
+
+$(document).ready(function() {
+var userName = $("#username").val();
+//alert(userName);
+var userType = $("#userType").val();
+//alert(userType);
+var country = $("#country").val();
+//alert(country);
+var referral = $("#referral").val();
+//alert(referral);
+
+$('#pdfDownload').click(function() {
+var userName = $("#username").val();
+//alert(userName);
+var userType = $("#userType").val();
+//alert(userType);
+var country = $("#country").val();
+//alert(country);
+var referral = $("#referral").val();
+//alert(referral);
+window.location.href="/userPdfData?userName="+ userName  +"&userType="+userType+"&country="+country+"&referral="+referral
+});
+});
+
+
+$(document).ready(function() {
+$('#downloadExcel').click(function() {
+var userName = $("#username").val();
+//alert(userName);
+var userType = $("#userType").val();
+//alert(userType);
+var country = $("#country").val();
+//alert(country);
+var referral = $("#referral").val();
+//alert(referral);
+window.location.href="/userExcelData?userName="+ userName  +"&userType="+userType+"&country="+country+"&referral="+referral
+});
+});
+
+</script>
+</div>
+</body>
+
+</html>

@@ -7,36 +7,28 @@
     <list default="true" id="000b03e8-8eb7-4df3-aafe-718948a2d934" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/bookSlotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/bookSlotController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/courtController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/courtController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/entryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/entryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/slotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/slotController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/BookSlotRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/BookSlotRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/customer/viewSlotsUser.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/customer/viewSlotsUser.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/entryTemplates/manageProfile.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/entryTemplates/manageProfile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/layout.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/masters/court.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/masters/court.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/masters/dayTypes.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/masters/dayTypes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/masters/game.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/masters/game.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/masters/slot.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/masters/slot.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/masters/specialDates.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/masters/specialDates.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/GameController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/bookSlotController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/bookSlotController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/courtController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/courtController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/slotController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/slotController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/repositories/BookSlotRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/repositories/BookSlotRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/customer/viewSlotsUser.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/customer/viewSlotsUser.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/entryTemplates/manageProfile.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/entryTemplates/manageProfile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/layout.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/masters/court.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/masters/court.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/masters/dayTypes.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/masters/dayTypes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/masters/game.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/masters/game.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/masters/slot.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/masters/slot.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/masters/specialDates.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/masters/specialDates.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -59,6 +51,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "CourtReserverplus.wasFacetEverAdded": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "last_opened_file_path": "C:/panda project/BookMyCourtVer1"

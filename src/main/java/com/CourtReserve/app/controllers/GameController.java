@@ -81,33 +81,37 @@ public class GameController {
         System.out.println(gameMode);
         String status=request.getParameter("status");
         System.out.println(status);
-        LocalDate fromDate= LocalDate.parse(request.getParameter("fromDate"));
+        String fromDate= String.valueOf(LocalDate.parse(request.getParameter("fromDate")));
         System.out.println(fromDate);
         LocalDate toDate= LocalDate.parse(request.getParameter("toDate"));
         System.out.println(toDate);
-        List<BookSlot> list = bookSlotRepository.findByGameDateBetween(fromDate,toDate);
+        List<BookSlot> list = bookSlotRepository.findByGameDateBetween(LocalDate.parse(fromDate),toDate);
         System.out.println(list);
         System.out.println("game:"+list.size());
 
         if(name.equals("all")&&!status.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByIdAsc(fromDate,toDate,status,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByIdAsc(LocalDate.parse(fromDate),toDate,status,gameMode);
         }
         else if(!status.equals("all") && !name.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameAndGameModeOrderByIdAsc(fromDate,toDate,status,name,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameAndGameModeOrderByIdAsc(LocalDate.parse(fromDate),toDate,status,name,gameMode);
         }
         else if(!status.equals("all") && name.equals("all") && gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByIdAsc(fromDate,toDate,status);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByIdAsc(LocalDate.parse(fromDate),toDate,status);
         }
         else if(name.equals("all") && status.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByIdAsc(fromDate,toDate,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByIdAsc(LocalDate.parse(fromDate),toDate,gameMode);
         }
         else if(!name.equals("all") && (status.equals("all") && !gameMode.equals("all"))){
-            list = bookSlotRepository.findByGameDateBetweenAndGameNameAndGameModeOrderByIdAsc(fromDate,toDate,name,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndGameNameAndGameModeOrderByIdAsc(LocalDate.parse(fromDate),toDate,name,gameMode);
         }
 
         else if(!status.equals("all") && !name.equals("all") && gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameOrderByIdAsc(fromDate,toDate,status,name);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameOrderByIdAsc(LocalDate.parse(fromDate),toDate,status,name);
         }
+        else if(status.equals("all") && !name.equals("all") && gameMode.equals("all")){
+            list = bookSlotRepository.findByGameDateBetweenAndGameNameOrderByIdAsc(LocalDate.parse(fromDate),toDate,name);
+        }
+
 
 
 

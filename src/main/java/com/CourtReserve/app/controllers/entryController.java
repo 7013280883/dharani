@@ -1,21 +1,34 @@
 package com.CourtReserve.app.controllers;
 
+import ch.qos.logback.classic.spi.LoggingEventVO;
 import com.CourtReserve.app.models.Referral;
 import com.CourtReserve.app.models.User;
 import com.CourtReserve.app.models.UserLog;
 import com.CourtReserve.app.repositories.ReferralRepository;
 import com.CourtReserve.app.repositories.UserLogRepository;
 import com.CourtReserve.app.repositories.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import csv.DownloadCsvReport1;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.ByteArrayOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -31,6 +44,10 @@ public class entryController {
     ReferralRepository referralRepository;
     @Autowired
     UserLogRepository userLogRepository;
+    @Autowired
+    Jackson2ObjectMapperBuilder mapperBuilder;
+
+
     @GetMapping("/public/register")
     public String showRegistrationForm(HttpSession session) {
 
@@ -274,5 +291,180 @@ public String changePwdHtmlForm(Model model, HttpSession session){
         return "redirect:/"; // Name of the success page or URL
     }
 
+    @GetMapping("/userData")
+    public String slotViewOrderForm(Model model, HttpSession session) {
+        if (session.getAttribute("loggedIn").equals("true")) {
+            // List<User> users = (List<User>) userRepository.findAll();
+            List<User> users = userRepository.findByOrderByIdDesc();
+            System.out.println("users:" + users);
+            model.addAttribute("user", users);
+            return "admin/userData";
+        }
+        List messages = new ArrayList<>();
+        messages.add("Login First");
+        model.addAttribute("messages", messages);
+        return "redirect:/loginPage";
+    }
+    @PostMapping("/userData")
+    public @ResponseBody String slotViewOrder(Model model, HttpServletResponse response, HttpServletRequest request) throws JsonProcessingException {
+        System.out.println("88888888888");
+        String userName = request.getParameter("userName");
+        System.out.println(userName);
+        String userType = request.getParameter("userType");
+        System.out.println(userType);
+        String country = request.getParameter("country");
+        System.out.println(country);
+        String referral = request.getParameter("referral");
+        System.out.println(referral);
+        List<User> list = new ArrayList<>();
+        if (!userName.equals("all") && (userType.equals("all") && (country.equals("all") && (referral.equals("all"))))) {
+            list = userRepository.findByUserName(userName);
+        } else if (!userType.equals("all") && (userName.equals("all") && (country.equals("all") && (referral.equals("all"))))) {
+            list = userRepository.findByUserType(userType);
+        } else if (userType.equals("all") && (userName.equals("all") && (!country.equals("all") && (referral.equals("all"))))) {
+            list = userRepository.findByCountry(country);
+        } else if (userType.equals("all") && (userName.equals("all") && (country.equals("all") && (!referral.equals("all"))))) {
+            list = userRepository.findByReferral(referral);
+        } else if (!userType.equals("all") && (!userName.equals("all") && (country.equals("all") && (referral.equals("all"))))) {
+            list = userRepository.findByUserNameAndUserType(userName, userType);
+        } else if (userType.equals("all") && (userName.equals("all") && (!country.equals("all") && (!referral.equals("all"))))) {
+            list = userRepository.findByCountryAndReferral(country, referral);
+        } else if (userType.equals("all") && (!userName.equals("all") && (country.equals("all") && (!referral.equals("all"))))) {
+            list = userRepository.findByUserNameAndReferral(userName, referral);
+        } else if (!userType.equals("all") && (userName.equals("all") && (!country.equals("all") && (referral.equals("all"))))) {
+            list = userRepository.findByCountryAndUserType(country, userType);
+        }
+        else if (!userType.equals("all") && (!userName.equals("all") && (!country.equals("all") && (referral.equals("all"))))) {
+            list = userRepository.findByCountryAndUserTypeAndUserName(country, userType, userName);
+        } else if (userType.equals("all") && (!userName.equals("all") && (!country.equals("all") && (!referral.equals("all"))))) {
+            list = userRepository.findByCountryAndUserNameAndReferral(country, userName, referral);
+        } else if (!userType.equals("all") && (!userName.equals("all") && (country.equals("all") && (!referral.equals("all"))))) {
+            list = userRepository.findByUserNameAndUserTypeAndReferral(userName, userType, referral);
+        } else if (!userType.equals("all") && (userName.equals("all") && (!country.equals("all") && (!referral.equals("all"))))) {
+            list = userRepository.findByCountryAndUserTypeAndReferral(country, userType, referral);
+        } else if (!userType.equals("all") && (!userName.equals("all") && (!country.equals("all") && (!referral.equals("all"))))) {
+            list = userRepository.findByCountryAndUserTypeAndReferralAndUserName(country, userType, referral, userName);
+        } else if (userType.equals("all") && (userName.equals("all") && (country.equals("all") && (referral.equals("all"))))) {
+            list = (List<User>) userRepository.findAll();
+        }
+
+
+        ObjectMapper mapper = mapperBuilder.build();
+        String output = mapper.writeValueAsString(list);
+        //String output1 = mapper.writeValueAsString(list);
+        System.out.println("Excel Size -- " + list.size());
+
+        return output;
+    }
+
+    @Autowired
+    SpringTemplateEngine springTemplateEngine;
+
+    @GetMapping("/userPdfData")
+    public ResponseEntity slotViewOrder1(HttpSession session, @RequestParam Map<String, String> body, Model model, HttpServletResponse response, HttpServletRequest request) throws Exception {
+        System.out.println("88888888888");
+        String userName = request.getParameter("userName");
+        System.out.println(userName);
+        String userType = request.getParameter("userType");
+        System.out.println(userType);
+        String country = request.getParameter("country");
+        System.out.println(country);
+        String referral = request.getParameter("referral");
+        System.out.println(referral);
+        List<User> list1 = new ArrayList<>();
+        if (!userName.equals("all") && (userType.equals("all") && (country.equals("all") && (referral.equals("all"))))) {
+            list1 = userRepository.findByUserName(userName);
+        } else if (!userType.equals("all") && (userName.equals("all") && (country.equals("all") && (referral.equals("all"))))) {
+            list1 = userRepository.findByUserType(userType);
+        } else if (userType.equals("all") && (userName.equals("all") && (!country.equals("all") && (referral.equals("all"))))) {
+            list1 = userRepository.findByCountry(country);
+        } else if (userType.equals("all") && (userName.equals("all") && (country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByReferral(referral);
+        } else if (!userType.equals("all") && (!userName.equals("all") && (country.equals("all") && (referral.equals("all"))))) {
+            list1 = userRepository.findByUserNameAndUserType(userName, userType);
+        } else if (userType.equals("all") && (userName.equals("all") && (!country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByCountryAndReferral(country, referral);
+        } else if (userType.equals("all") && (!userName.equals("all") && (country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByUserNameAndReferral(userName, referral);
+        } else if (!userType.equals("all") && (userName.equals("all") && (!country.equals("all") && (referral.equals("all"))))) {
+            list1 = userRepository.findByCountryAndUserType(country, userType);
+        }
+        else if (!userType.equals("all") && (!userName.equals("all") && (!country.equals("all") && (referral.equals("all"))))) {
+            list1 = userRepository.findByCountryAndUserTypeAndUserName(country, userType, userName);
+        } else if (userType.equals("all") && (!userName.equals("all") && (!country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByCountryAndUserNameAndReferral(country, userName, referral);
+        } else if (!userType.equals("all") && (!userName.equals("all") && (country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByUserNameAndUserTypeAndReferral(userName, userType, referral);
+        } else if (!userType.equals("all") && (userName.equals("all") && (!country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByCountryAndUserTypeAndReferral(country, userType, referral);
+        } else if (!userType.equals("all") && (!userName.equals("all") && (!country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByCountryAndUserTypeAndReferralAndUserName(country, userType, referral, userName);
+        } else if (userType.equals("all") && (userName.equals("all") && (country.equals("all") && (referral.equals("all"))))) {
+            list1 = (List<User>) userRepository.findAll();
+        }
+        WebContext context = new WebContext(request, response, request.getServletContext());
+        context.setVariable("list", list1);
+        String finalhtml = springTemplateEngine.process("admin/userPdfData", context);
+        ByteArrayOutputStream ops = new ByteArrayOutputStream();
+        ITextRenderer renderer = new ITextRenderer();
+        System.out.println(finalhtml);
+        renderer.setDocumentFromString(finalhtml);
+        renderer.layout();
+        renderer.createPDF(ops, false);
+        renderer.finishPDF();
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + userName.toString() + "-" + userType.toString() + ".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+
+    }
+
+    @GetMapping("/userExcelData")
+    public ResponseEntity slotViewOrder2(HttpSession session, @RequestParam Map<String, String> body, Model model, HttpServletResponse response, HttpServletRequest request) throws Exception {
+        System.out.println("88888888888");
+        String userName = request.getParameter("userName");
+        System.out.println(userName);
+        String userType = request.getParameter("userType");
+        System.out.println(userType);
+        String country = request.getParameter("country");
+        System.out.println(country);
+        String referral = request.getParameter("referral");
+        System.out.println(referral);
+        List<User> list1 = new ArrayList<>();
+        if (!userName.equals("all") && (userType.equals("all") && (country.equals("all") && (referral.equals("all"))))) {
+            list1 = userRepository.findByUserName(userName);
+        } else if (!userType.equals("all") && (userName.equals("all") && (country.equals("all") && (referral.equals("all"))))) {
+            list1 = userRepository.findByUserType(userType);
+        } else if (userType.equals("all") && (userName.equals("all") && (!country.equals("all") && (referral.equals("all"))))) {
+            list1 = userRepository.findByCountry(country);
+        } else if (userType.equals("all") && (userName.equals("all") && (country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByReferral(referral);
+        } else if (!userType.equals("all") && (!userName.equals("all") && (country.equals("all") && (referral.equals("all"))))) {
+            list1 = userRepository.findByUserNameAndUserType(userName, userType);
+        } else if (userType.equals("all") && (userName.equals("all") && (!country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByCountryAndReferral(country, referral);
+        } else if (userType.equals("all") && (!userName.equals("all") && (country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByUserNameAndReferral(userName, referral);
+        } else if (!userType.equals("all") && (userName.equals("all") && (!country.equals("all") && (referral.equals("all"))))) {
+            list1 = userRepository.findByCountryAndUserType(country, userType);
+        }
+        else if (!userType.equals("all") && (!userName.equals("all") && (!country.equals("all") && (referral.equals("all"))))) {
+            list1 = userRepository.findByCountryAndUserTypeAndUserName(country, userType, userName);
+        } else if (userType.equals("all") && (!userName.equals("all") && (!country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByCountryAndUserNameAndReferral(country, userName, referral);
+        } else if (!userType.equals("all") && (!userName.equals("all") && (country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByUserNameAndUserTypeAndReferral(userName, userType, referral);
+        } else if (!userType.equals("all") && (userName.equals("all") && (!country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByCountryAndUserTypeAndReferral(country, userType, referral);
+        } else if (!userType.equals("all") && (!userName.equals("all") && (!country.equals("all") && (!referral.equals("all"))))) {
+            list1 = userRepository.findByCountryAndUserTypeAndReferralAndUserName(country, userType, referral, userName);
+        } else if (userType.equals("all") && (userName.equals("all") && (country.equals("all") && (referral.equals("all"))))) {
+            list1 = (List<User>) userRepository.findAll();
+        }
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet(body.get("userName").toString());
+        HSSFRow Header = sheet.createRow(0);
+        int headercellStart = 0;
+        String header[] = {"userName", "userType", "MobileNo", "email", "uadr1", "uadr2", "uadr3", "location", "country", "upincode", "referral", "lastLogin"};
+        DownloadCsvReport1.getCsvReportDownload(response, header, list1, "slot_data.csv");
+        return (ResponseEntity) ResponseEntity.status(203);
+    }
 
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <style>
+    table,
+    th,
+    td {
+
+      border: 2px solid black;
+      border-collapse: collapse;
+    }
+    th{
+    background-color: black;
+
+    }@media print {
+    h1 {
+        color: red;
+    }
+    @page {
+        size: landscape;
+        margin: 0;
+    }
+    .css-serial {
+  counter-reset: serial-number;  /* Set the serial number counter to 0 */
+}
+.css-serial td:first-child:before {
+  counter-increment: serial-number;  /* Increment the serial number counter */
+  content: counter(serial-number);  /* Display the counter */
+}
+
+</style>
+</head>
+<body>
+<table class="table" style="width:100%; border: 2px  black;" id="purchaseTable" >
+  <thead style="background-color:silver;color: black;">
+
+  <td scope="col">User Name</td>
+  <td scope="col">User Type</td>
+  <td scope="col">Mobile No</td>
+  <td scope="col">Email Id</td>
+  <td scope="col">Address1</td>
+  <td scope="col">Address2</td>
+  <td scope="col">Address3</td>
+  <td scope="col">Location </td>
+  <td scope="col">Country</td>
+  <td scope="col">Pin Code</td>
+  <td scope="col">Referral</td>
+  <td scope="col">Lost Login</td>
+  </thead>
+  <tbody>
+  <tr th:each="lists : ${list}">
+
+    <td scope="col"><span th:text="${lists.userName}"></span></td>
+    <td scope="col"><span th:text="${lists.userType}"></span></td>
+    <td scope="col"><span th:text="${lists.mobileNo}"></span></td>
+    <td scope="col"><span th:text="${lists.email}"></span></td>
+    <td scope="col"><span th:text="${lists.uadr1}"></span></td>
+    <td scope="col"><span th:text="${lists.uadr2}"></span></td>
+    <td scope="col"><span th:text="${lists.uadr3}"></span></td>
+    <td scope="col"><span th:text="${lists.location}"></span></td>
+    <td scope="col"><span th:text="${lists.country}"></span></td>
+    <td scope="col"><span th:text="${lists.upincode}"></span></td>
+    <td scope="col"><span th:text="${lists.referral}"></span></td>
+    <td scope="col"><span th:text="${lists.lastLogin}"></span></td>
+
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

@@ -16,4 +16,18 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     List<User> findByOrderByIdDesc();
     User findByPassword( String Password);
+    List <User> findByUserName(String userName);
+    List <User> findByUserType(String userType);
+    List <User> findByCountry(String country);
+    List <User> findByReferral(String referral);
+    List <User> findByUserNameAndUserType(String userName,String userType);
+    List <User> findByCountryAndReferral(String country,String referral);
+    List <User> findByUserNameAndReferral(String userName,String referral);
+    List <User> findByCountryAndUserType(String country,String userType);
+    List <User> findByCountryAndUserTypeAndUserName(String country,String userType,String userName);
+    List <User>  findByCountryAndUserNameAndReferral(String country,String userName,String referral);
+    List <User> findByUserNameAndUserTypeAndReferral(String userName,String userType,String referral);
+    List <User> findByCountryAndUserTypeAndReferral(String country,String userType,String referral);
+    List <User> findByCountryAndUserTypeAndReferralAndUserName(String country,String userType,String referral,String userName);
+
 }

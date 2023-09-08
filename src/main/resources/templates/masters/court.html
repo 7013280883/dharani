@@ -160,7 +160,7 @@ body {
         <br>
         <h4>COURT MASTER ENTRY</h4>
 
-        <form method="post" action="#">
+        <form method="post" action="/courts" modelAttribute="court">
             <div class="row auto-align">
                 <div class="col">
                     <div class="form-field d-flex align-items-center">
@@ -188,13 +188,13 @@ body {
                 <div class="col">
                     <div class="form-field d-flex align-items-center">
                         <label for="fromDate"></label>
-                        <input id="fromDate" name="froate" class="form-control" type="date" th:min="${dateTime}" >
+                        <input id="fromDate" name="fromDate" class="form-control" type="date" th:min="${dateTime}" >
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-field d-flex align-items-center">
                         <label for="toDate"></label>
-                        <input id="toDate" name="todate" class="form-control" type="date" th:min="${dateTime}">
+                        <input id="toDate" name="toDate" class="form-control" type="date" th:min="${dateTime}">
                     </div>
                 </div>
             </div>
