@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+  <title></title>
+  <style>
+    #username{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  }
+  input#fromDate{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  text-align: center;
+  }
+  input#toDate{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  text-align: center;
+  }
+  #active{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  }
+  body {
+    margin: 0;   /* Remove body margins */
+}
+<!--.css-serial {-->
+<!--  counter-reset: serial-number;  /* Set the serial number counter to 0 */-->
+<!--}-->
+<!--.css-serial td:first-child:before {-->
+<!--  counter-increment: serial-number;  /* Increment the serial number counter */-->
+<!--  content: counter(serial-number);  /* Display the counter */-->
+<!--}-->
+
+  </style>
+  <div class="container">
+    <div th:replace="fragments/message :: message_html"></div>
+  </div>
+</head>
+<body style="background-color:Blonde;">
+<div layout:fragment="content">
+  <div class="container">
+    <h4 class = "text-middle"> <font color="#000080 ">
+      <b> SLOT DATA REPORTS</b> </font></h4>
+    <hr color="blue">
+
+    <div class="row auto-align">
+      <div class="col">
+        <label for="courtCode">courtCode</label>
+        <select id="courtCode" class="form-control" name="courtCode">
+          <option value="all">all</option>
+          <option th:each="i : ${slot}" th:value="${i.courtCode}"><span th:text="${i.courtCode}"></span></option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="dayType">Day Type</label>
+        <select id="dayType" class="form-control" name="dayType">
+          <option value="all">all</option>
+          <option th:each="i : ${slot}" th:value="${i.dayType}"><span th:text="${i.dayType}"></span></option>
+        </select>
+      </div>
+
+    </div>
+    <br>
+    <div class="box-footer">
+      <button id="getData" class="btn btn-primary">Get Data</button>
+      <button id="pdfDownload" class="btn btn-primary"> Download PDF</button>
+      <button id="downloadExcel" class="btn btn-primary"> Download Excel</button>
+
+    </div>
+
+
+
+    <hr>
+
+    <div class="container">
+      <table class="table" style="width:100%" id="purchaseTable" border=0>
+        <thead>
+        <tr>
+
+          <th scope="col">Slot Code</th>
+          <th scope="col">Court Code</th>
+          <th scope="col">Day Type</th>
+          <th scope="col">Start Hour</th>
+          <th scope="col">End Hour</th>
+          <th scope="col">slotLength</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+      <h4><center> <p id="notfound" style="display:none;"><font color="blue">---------No Records found---------</font> </p></center></h4>
+    </div>
+
+  </div>
+  <script>
+
+ $('#getData').click(function() {
+
+var courtCode = $("#courtCode").val();
+var dayType = $("#dayType").val();
+
+$("#purchaseTable tbody tr").remove();
+
+$.ajax({
+async:'false',
+ type: 'POST',
+ url: '/slotData',
+      data: {
+     "courtCode":courtCode,
+     "dayType":dayType,
+
+
+      },
+       success: function(data) {
+
+ const jsonObject = JSON.parse(data);
+    var tr = '';
+    $.each(jsonObject, function(i, item) {
+tr += '<tr><td>' + item.slotCode + '</td><td>' + item.courtCode + '</td><td>' + item.dayType + '</td><td>' + item.startHour + '</td><td>' + item.endHour + '</td><td>' + item.slotLength + '</td>tr>';
+    });
+   console.log(tr);
+   $('#purchaseTable').append(tr);
+   $('#notfound').hide();
+const isEmpty = document.querySelectorAll("#purchaseTable tr").length <= 1;
+if(isEmpty==true){
+
+$('#notfound').show();
+}
+
+}
+});
+});
+
+$(document).ready(function() {
+var courtCode = $("#courtCode").val();
+var dayType = $("#dayType").val();
+
+$('#pdfDownload').click(function() {
+var courtCode = $("#courtCode").val();
+var dayType = $("#dayType").val();
+window.location.href="/slotPdfData1?courtCode="+ courtCode  +"&dayType="+dayType
+});
+});
+
+
+$(document).ready(function() {
+var courtCode = $("#courtCode").val();
+var dayType = $("#dayType").val();
+$('#downloadExcel').click(function() {
+var courtCode = $("#courtCode").val();
+var dayType = $("#dayType").val();
+
+window.location.href="/slotExcelData1?courtCode="+ courtCode  +"&dayType="+dayType});
+});
+
+</script>
+</div>
+</body>
+
+</html>

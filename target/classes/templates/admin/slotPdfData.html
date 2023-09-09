@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <style>
+    table,
+    th,
+    td {
+
+      border: 2px solid black;
+      border-collapse: collapse;
+    }
+    th{
+    background-color: black;
+
+    }@media print {
+    h1 {
+        color: red;
+    }
+    @page {
+        size: landscape;
+        margin: 0;
+    }
+
+</style>
+</head>
+<body>
+<table class="table" style="width:100%; border: 2px  black;" id="purchaseTable" >
+  <thead style="background-color:silver;color: black;">
+  <td scope="col">Slot Code</td>
+  <td scope="col">Court Code</td>
+  <td scope="col">Day Type</td>
+  <td scope="col">Start Hour</td>
+  <td scope="col">End Hour</td>
+  <td scope="col">slotLength</td>
+
+  </thead>
+  <tbody>
+  <tr th:each="lists : ${list}">
+    <td scope="col"><span th:text="${lists.slotCode}"></span></td>
+    <td scope="col"><span th:text="${lists.courtCode}"></span></td>
+    <td scope="col"><span th:text="${lists.dayType}"></span></td>
+    <td scope="col"><span th:text="${lists.startHour}"></span></td>
+    <td scope="col"><span th:text="${lists.endHour}"></span></td>
+    <td scope="col"><span th:text="${lists.slotLength}"></span></td>
+
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

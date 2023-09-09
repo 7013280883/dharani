@@ -15,4 +15,8 @@ public interface SlotRepository extends CrudRepository<Slot, Integer> {
     List<Slot> findByDayTypeOrderByStartHourAsc(String dayType);
     @Query("select * from slot where court_code=?1 ")
     Slot findBySlotCode(String courtCode);
+
+    List <Slot> findByOrderByIdDesc();
+    List <Slot> findByCourtCode(String courtCode);
+    List <Slot> findByCourtCodeAndDayType(String courtCode,String dayType);
 }

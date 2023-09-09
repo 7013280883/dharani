@@ -126,8 +126,10 @@
         <script>
     $(document).ready(function() {
         let params = new URLSearchParams(location.search);
+       // alert(params);
         console.log(params.get('date'))
         $("#current-date").html(params.get('date'));
+
     })
 </script>
     </div>

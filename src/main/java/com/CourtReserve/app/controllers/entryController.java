@@ -296,6 +296,7 @@ public String changePwdHtmlForm(Model model, HttpSession session){
         if (session.getAttribute("loggedIn").equals("true")) {
             // List<User> users = (List<User>) userRepository.findAll();
             List<User> users = userRepository.findByOrderByIdDesc();
+
             System.out.println("users:" + users);
             model.addAttribute("user", users);
             return "admin/userData";
@@ -466,5 +467,36 @@ public String changePwdHtmlForm(Model model, HttpSession session){
         DownloadCsvReport1.getCsvReportDownload(response, header, list1, "slot_data.csv");
         return (ResponseEntity) ResponseEntity.status(203);
     }
+
+
+    @GetMapping("/userReports")
+    public String slotViewOrderForm5(Model model, HttpSession session) {
+        if (session.getAttribute("loggedIn").equals("true")) {
+            UserLog userLog = userLogRepository.findBySessionIdAndStatus(session.getId(), "active");
+            System.out.println(userLog.getMobileNo());
+            String mobNo=userLog.getMobileNo();
+            User user1 = userRepository.findByMobileNo(mobNo);
+            System.out.println(user1.getMobileNo());
+            model.addAttribute("user", user1);
+
+            return "customer/userReports";
+        }
+        List messages = new ArrayList<>();
+        messages.add("Login First");
+        model.addAttribute("messages", messages);
+        return "redirect:/loginPage";
+    }
+//    @PostMapping("/userReports")
+//    public @ResponseBody String slotViewOrder1(Model model, HttpServletResponse response, HttpServletRequest request) throws JsonProcessingException {
+//        System.out.println("88888888888");
+//        String mobileNo = request.getParameter("mobileNo");
+//        System.out.println(mobileNo);
+//        User user10 =  userRepository.findByMobileNo(mobileNo);
+//        System.out.println("Raam:" + user10);
+//        model.addAttribute("user",user10);
+//        ObjectMapper mapper = mapperBuilder.build();
+//        String output = mapper.writeValueAsString(user10);
+//        return output;
+//    }
 
 }

@@ -52,6 +52,7 @@ $(document).ready(function() {
                      var month = d.getMonth()+1;
                      //console.log(month);
                       var datte = d.getFullYear()+"-" +month+"-" +(day).toString()
+                      //alert(datte);
                      if (Object.keys(response['datesMap']).includes((day).toString()) ){
                      //console.log(response['datesMap'][(day).toString()]);
                      cal[i].push('<td class="day" style="background-color:'+ response['datesMap'][(day).toString()][1] +';" onClick="getSlots(\''+ datte + '\')" >' + day++ + '</td>');

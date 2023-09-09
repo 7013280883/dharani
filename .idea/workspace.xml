@@ -6,16 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="000b03e8-8eb7-4df3-aafe-718948a2d934" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/bookSlotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/bookSlotController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/courtController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/courtController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/entryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/entryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/slotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/controllers/slotController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/BookSlotRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/BookSlotRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/CourtRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/CourtRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/SlotRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/CourtReserve/app/repositories/SlotRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/calendar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/calendar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/acceptSlotsCalendar.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/acceptSlotsCalendar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/customer/bookSlotUser.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/customer/bookSlotUser.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/masters/court.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/masters/court.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/courtController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/courtController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/masters/court.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/masters/court.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/bookSlotController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/bookSlotController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/entryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/CourtReserve/app/controllers/entryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/calendar.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/calendar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/admin/acceptSlotsCalendar.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/admin/acceptSlotsCalendar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/customer/bookSlotUser.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/customer/bookSlotUser.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/layout.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,15 +54,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "CourtReserverplus.wasFacetEverAdded": "true",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/panda project/BookMyCourtVer1"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;CourtReserverplus.wasFacetEverAdded&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/panda project/Raam/Inv-Pdf&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\panda project\BookMyCourtVer1\src\main\resources\templates\entryTemplates" />

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import csv.DownloadCsvReport;
 
+import csv.DownloadCsvReport2;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -491,6 +492,117 @@ public class slotController {
         renderer.createPDF(ops, false);
         renderer.finishPDF();
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+user.getUserName()+ request.getSession().getAttribute("loggedMobile").toString()+".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+
+    }
+    @GetMapping("/slotData")
+    public String slotViewOrderForm1(Model model, HttpSession session) {
+        if (session.getAttribute("loggedIn").equals("true")) {
+            // List<User> users = (List<User>) userRepository.findAll();
+            List<Slot> slots = slotRepository.findByOrderByIdDesc();
+            System.out.println("slots:" + slots);
+            model.addAttribute("slot", slots);
+            return "admin/slotData";
+        }
+        List messages = new ArrayList<>();
+        messages.add("Login First");
+        model.addAttribute("messages", messages);
+        return "redirect:/loginPage";
+    }
+
+    @PostMapping("/slotData")
+    public @ResponseBody String slotViewOrder1(Model model, HttpServletResponse response, HttpServletRequest request) throws JsonProcessingException {
+        System.out.println("88888888888");
+        String courtCode = request.getParameter("courtCode");
+        System.out.println(courtCode);
+        String dayType = request.getParameter("dayType");
+        System.out.println(dayType);
+        List<Slot> list = new ArrayList<>();
+        if(courtCode.equals("all")&&(dayType.equals("all"))){
+            list = (List<Slot>) slotRepository.findAll();
+            System.out.println("kalyan:"+list);
+        }
+        else if(!courtCode.equals("all")&&(dayType.equals("all"))){
+            list = (List<Slot>) slotRepository.findByCourtCode(courtCode);
+            System.out.println("kalyan1:"+list);
+        }
+        else if(!courtCode.equals("all")&&(!dayType.equals("all"))){
+            list = (List<Slot>) slotRepository.findByCourtCodeAndDayType(courtCode,dayType);
+            System.out.println("kalyan2:"+list);
+        }
+
+        ObjectMapper mapper = mapperBuilder.build();
+        String output = mapper.writeValueAsString(list);
+        //String output1 = mapper.writeValueAsString(list);
+        System.out.println("Excel Size -- " + list.size());
+
+        return output;
+    }
+
+    @GetMapping("/slotPdfData1")
+    public ResponseEntity slotViewPdfUserOrder1(Model model,HttpServletResponse response,HttpServletRequest request) {
+        System.out.println("88888888888");
+        String courtCode = request.getParameter("courtCode");
+        System.out.println(courtCode);
+        String dayType = request.getParameter("dayType");
+        System.out.println(dayType);
+        List<Slot> list = new ArrayList<>();
+        if(courtCode.equals("all")&&(dayType.equals("all"))){
+            list = (List<Slot>) slotRepository.findAll();
+            System.out.println("kalyan:"+list);
+        }
+        else if(!courtCode.equals("all")&&(dayType.equals("all"))){
+            list = (List<Slot>) slotRepository.findByCourtCode(courtCode);
+            System.out.println("kalyan1:"+list);
+        }
+        else if(!courtCode.equals("all")&&(!dayType.equals("all"))){
+            list = (List<Slot>) slotRepository.findByCourtCodeAndDayType(courtCode,dayType);
+            System.out.println("kalyan2:"+list);
+        }
+
+        WebContext context = new WebContext(request, response, request.getServletContext());
+        context.setVariable("list", list);
+        String finalhtml = springTemplateEngine.process("admin/slotPdfData",context);
+        ByteArrayOutputStream ops = new ByteArrayOutputStream();
+        ITextRenderer renderer = new ITextRenderer();
+        System.out.println(finalhtml);
+        renderer.setDocumentFromString(finalhtml);
+        renderer.layout();
+        renderer.createPDF(ops, false);
+        renderer.finishPDF();
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+courtCode+ request.getSession().getAttribute("loggedMobile").toString()+".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+
+    }
+    @GetMapping("/slotExcelData1")
+    public ResponseEntity slotViewUserOrder2(HttpSession session,@RequestParam Map<String, String> body,Model model,HttpServletResponse response, HttpServletRequest request) throws Exception {
+        System.out.println("88888888888");
+        String courtCode = request.getParameter("courtCode");
+        System.out.println(courtCode);
+        String dayType = request.getParameter("dayType");
+        System.out.println(dayType);
+        List<Slot> list1 = new ArrayList<>();
+        if(courtCode.equals("all")&&(dayType.equals("all"))){
+            list1 = (List<Slot>) slotRepository.findAll();
+            System.out.println("kalyan:"+list1);
+        }
+        else if(!courtCode.equals("all")&&(dayType.equals("all"))){
+            list1 = (List<Slot>) slotRepository.findByCourtCode(courtCode);
+            System.out.println("kalyan1:"+list1);
+        }
+        else if(!courtCode.equals("all")&&(!dayType.equals("all"))){
+            list1 = (List<Slot>) slotRepository.findByCourtCodeAndDayType(courtCode,dayType);
+            System.out.println("kalyan2:"+list1);
+        }
+        System.out.println("list:"+list1);
+        System.out.println("Excel Size -- " + list1.size());
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet(request.getSession().getAttribute("loggedMobile").toString());
+        HSSFRow Header = sheet.createRow(0);
+        int headercellStart = 0;
+        String header[] ={"slotCode","courtCode","dayType","startHour","endHour","slotLength"};
+        // String header[]={"gameDate","slotCode","game"};
+        DownloadCsvReport2.getCsvReportDownload(response, header, list1, "invoice_data.csv");
+
+        return (ResponseEntity) ResponseEntity.status(203);
 
     }
 }

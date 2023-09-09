@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <style>
+    table,
+    th,
+    td {
+
+      border: 2px solid black;
+      border-collapse: collapse;
+    }
+    th{
+    background-color: black;
+
+    }@media print {
+    h1 {
+        color: red;
+    }
+    @page {
+        size: landscape;
+        margin: 0;
+    }
+
+</style>
+</head>
+<body>
+<table class="table" style="width:100%; border: 2px  black;" id="purchaseTable" >
+  <thead style="background-color:silver;color: black;">
+  <td scope="col">Code</td>
+  <td scope="col">Game Name</td>
+  <td scope="col">Authority</td>
+  <td scope="col">StartDate</td>
+  <td scope="col">EndDate</td>
+  </thead>
+  <tbody>
+  <tr th:each="lists : ${list}">
+    <td scope="col"><span th:text="${lists.code}"></span></td>
+    <td scope="col"><span th:text="${lists.name}"></span></td>
+    <td scope="col"><span th:text="${lists.authority}"></span></td>
+    <td scope="col"><span th:text="${lists.startDate}"></span></td>
+    <td scope="col"><span th:text="${lists.endDate}"></span></td>
+
+
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

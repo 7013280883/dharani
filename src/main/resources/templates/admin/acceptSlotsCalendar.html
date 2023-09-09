@@ -31,7 +31,9 @@
                 <table class="table caltable"></table>
             </div>`
         </div>
+
     </div>
+    <h3>Selected Date : <i id = "current-date" ></i></h3>
     <div class="form-check">
         <input class="form-check-input" type="checkbox" id="autoReject" value="false">
         <label class="form-check-label" for="autoReject">
@@ -75,7 +77,15 @@
             </table>
         </div>
     </div>
+    <script>
+    $(document).ready(function() {
+        let params = new URLSearchParams(location.search);
+        //alert(params);
+        console.log(params.get('date'))
+        $("#current-date").html(params.get('date'));
 
+    })
+</script>
 
 </div>
 

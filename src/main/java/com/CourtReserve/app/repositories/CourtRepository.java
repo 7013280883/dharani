@@ -3,6 +3,7 @@ package com.CourtReserve.app.repositories;
 import com.CourtReserve.app.models.Court;
 import org.springframework.data.repository.CrudRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface CourtRepository extends CrudRepository<Court, Integer> {
@@ -11,4 +12,8 @@ public interface CourtRepository extends CrudRepository<Court, Integer> {
 
     @Override
     void deleteById(Integer integer);
+    List<Court> findByOrderByIdDesc();
+    //List findByCourtDateBetweenOrderByIdAsc(String startDate, String endDate);
+    List findByAuthority(String authority);
+    List findByNameAndAuthority(String name,String authority);
 }

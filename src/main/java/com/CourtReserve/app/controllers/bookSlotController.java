@@ -66,9 +66,9 @@ public class bookSlotController {
     public String getSlots(Model model, @RequestParam(name = "date", defaultValue = "") String date, HttpSession session){
         if (date.equals("")){
             date = LocalDate.now().format(dtf);
-            System.out.println("RAaam1:"+date);
+           // System.out.println("RAaam1:"+date);
         }
-
+        System.out.println("RAaam1:"+date);
         LocalDate dateModified = LocalDate.of(Integer.parseInt(date.split("-")[0]),Integer.parseInt(date.split("-")[1]),Integer.parseInt(date.split("-")[2]) );
         SpecialDates specialDate = specialDatesRepository.findByDate(date);
         System.out.println("RAaam2:"+specialDate);
@@ -232,10 +232,15 @@ String a="";
     private final UserRepository userRepository;
 
     @RequestMapping("/acceptSlots")
-    public String acceptSlots(Model model, HttpSession session){
+    public String acceptSlots(Model model,@RequestParam(name = "date", defaultValue = "") String date, HttpSession session){
         Map user = (Map) session.getAttribute("user");
-
+        if (date.equals("")){
+            date = LocalDate.now().format(dtf);
+            // System.out.println("RAaam1:"+date);
+        }
+        System.out.println("RAaam1:"+date);
         model.addAttribute("courts", courtRepository.findAll());
+        model.addAttribute("date", date);
         return "admin/acceptSlotsCalendar";
     }
     @GetMapping("/slotViewDataUser")
