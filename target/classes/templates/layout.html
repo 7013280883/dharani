@@ -93,7 +93,7 @@ body {
 
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <a class="navbar-brand" href="/">
-            <img th:src="@{images/Custom.jpg}" id="logo" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            <img th:src="@{images/court.jpeg}" id="logo" alt="" width="30" height="24" class="d-inline-block align-text-top">
             <font color="#00008b"> <b>BOOK MY COURT</b></font>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -160,16 +160,24 @@ body {
 
                         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#"> <font color="green"><b>Masters</b></font></a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/gameDataUser">Game Data</a></li>
-                                <li class="navbar-nav">
-                                    <a class="dropdown-item" href="/courtData">Court Data Reports</a>
-                                </li>
+
                                 <li class="navbar-nav">
 
-                                    <a class="dropdown-item" href="/userReports">User Reports</a>
+                                    <a class="dropdown-item" href="/userReports">User Data</a>
                                 </li>
                                 <li class="navbar-nav">
-                                    <a class="dropdown-item" href="/slotData">Slot Data Reports</a>
+                                    <a class="dropdown-item" href="/courtData">Court Data </a>
+                                </li>
+
+                                <li class="navbar-nav">
+                                    <a class="dropdown-item" href="/slotData">Slot Data </a>
+                                </li>
+                                <li><a class="dropdown-item" href="/gameData">Game Data</a></li>
+                                <li class="navbar-nav">
+                                    <a class="dropdown-item" href="/dayTypeData">Day Types Data</a>
+                                </li>
+                                <li class="navbar-nav">
+                                    <a class="dropdown-item" href="/specialDatesData">Special Dates</a>
                                 </li>
                             </ul>
                         </li>
@@ -237,21 +245,21 @@ body {
 
                         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#"> <font color="green"><b>Masters</b></font></a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/gameDataUser">Game Data</a></li>
-                                <li><a class="dropdown-item" href="/userData">User Data Reports</a></li>
 
+                                <li><a class="dropdown-item" href="/userData">User Data </a></li>
+                                <li><a class="dropdown-item" href="/gameData">Game Data</a></li>
                                 <li class="navbar-nav">
-                                    <a class="dropdown-item" href="/courtData">Court Data Reports</a>
+                                    <a class="dropdown-item" href="/courtData">Court Data </a>
                                 </li>
                                 <li class="navbar-nav">
-                                    <a class="dropdown-item" href="/slotData">Slot Data Reports</a>
+                                    <a class="dropdown-item" href="/slotData">Slot Data </a>
                                 </li>
-                                <!--                                <li class="navbar-nav">-->
-                                <!--                                    <a class="dropdown-item" href="/dayTypes">Day Types</a>-->
-                                <!--                                </li>-->
-                                <!--                                <li class="navbar-nav">-->
-                                <!--                                    <a class="dropdown-item" href="/specialDates">Special Dates</a>-->
-                                <!--                                </li>-->
+                                <li class="navbar-nav">
+                                    <a class="dropdown-item" href="/dayTypeData">Day Types Data</a>
+                                </li>
+                                <li class="navbar-nav">
+                                    <a class="dropdown-item" href="/specialDatesData">Special Dates</a>
+                                </li>
                                 <!--                                <li class="navbar-nav">-->
                                 <!--                                    <a class="dropdown-item" href="/games">Games</a>-->
                                 <!--                                </li>-->
@@ -263,16 +271,16 @@ body {
                             </ul>
                         </li>
                     </ul>
-
                 </div>
-
             </ul>
+
         </li>
 
-        <div class="d-flex navbar-nav" id="navbarNavAltMarkup" th:if="${session.loggedIn == 'true'}"  style="color: blue; font-size: 16px;" >
-            <h6><center>Welcome</center></h6>
+        <div class="d-flex navbar-nav" id="navbarNavAltMarkup"  th:if="${session.loggedIn == 'true'}"   style="color: blue; font-size: 16px; valign='center'" >
+            <a class="navbar-brand" ><font color="blue">Welcome</font></a>
+
             <ul class="nav-item dropdown">
-                <a  class="nav-link dropdown-toggle"  aria-current="page"  th:text="${session.user.userName}" href="/" data-bs-toggle="dropdown" aria-expanded="false" style="color: red;"></a>
+                <a  class="nav-link dropdown-toggle"  aria-current="page"   th:text="${session.user.userName}" href="/" data-bs-toggle="dropdown" aria-expanded="false" style="color: red;"></a>
                 <ul class="dropdown-menu">
                     <li class="navbar-nav">
                         <a class="nav-link active" aria-current="page" href="/public/pwd"><font color="black">Reset Password</font> </a>
@@ -282,7 +290,15 @@ body {
                     </li>
                 </ul>
             </ul>
-            <img class="account-icon" alt="" th:src="@{images/letter-a.png}" width="30" height="24">
+            <li class="collapse navbar-collapse" id="navbarNavAltMarkup" th:if="${session.loggedIn == 'true' && session.user.userType == 'Admin' }">
+
+                <img class="account-icon" alt="" th:src="@{images/letter-a.png}" align="center" width="30" height="24">
+            </li>
+            <li class="collapse navbar-collapse" id="navbarNavAltMarkup" th:if="${session.loggedIn == 'true' && session.user.userType == 'Member' }" >
+
+                <img class="account-icon" alt="" th:src="@{images/M.png}" align="center" width="30" height="34">
+
+            </li>
         </div>
     </nav>
 </div>
@@ -293,7 +309,7 @@ body {
             <b> www.bookmycourts.com </b>
         </font>
         <font color="black ">
-            <b> @Copyright ©2023 Version_08-09-2023-C</b>
+            <b> @Copyright ©2023 Version_11-09-2023-C</b>
         </font>
 
         <font color="#ffff00">

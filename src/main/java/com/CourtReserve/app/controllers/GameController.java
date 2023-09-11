@@ -7,6 +7,7 @@ import com.CourtReserve.app.repositories.GameRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import csv.DownloadCsvReport;
+import csv.DownloadCsvReport4;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -85,31 +86,31 @@ public class GameController {
         System.out.println(fromDate);
         LocalDate toDate= LocalDate.parse(request.getParameter("toDate"));
         System.out.println(toDate);
-        List<BookSlot> list = bookSlotRepository.findByGameDateBetween(LocalDate.parse(fromDate),toDate);
+        List<BookSlot> list = bookSlotRepository.findByGameDateBetweenOrderByGameNameAsc(LocalDate.parse(fromDate),toDate);
         System.out.println(list);
         System.out.println("game:"+list.size());
 
         if(name.equals("all")&&!status.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByIdAsc(LocalDate.parse(fromDate),toDate,status,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByGameNameAsc(LocalDate.parse(fromDate),toDate,status,gameMode);
         }
         else if(!status.equals("all") && !name.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameAndGameModeOrderByIdAsc(LocalDate.parse(fromDate),toDate,status,name,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameAndGameModeOrderByGameNameAsc(LocalDate.parse(fromDate),toDate,status,name,gameMode);
         }
         else if(!status.equals("all") && name.equals("all") && gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByIdAsc(LocalDate.parse(fromDate),toDate,status);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByGameNameAsc(LocalDate.parse(fromDate),toDate,status);
         }
         else if(name.equals("all") && status.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByIdAsc(LocalDate.parse(fromDate),toDate,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByGameNameAsc(LocalDate.parse(fromDate),toDate,gameMode);
         }
         else if(!name.equals("all") && (status.equals("all") && !gameMode.equals("all"))){
-            list = bookSlotRepository.findByGameDateBetweenAndGameNameAndGameModeOrderByIdAsc(LocalDate.parse(fromDate),toDate,name,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndGameNameAndGameModeOrderByGameNameAsc(LocalDate.parse(fromDate),toDate,name,gameMode);
         }
 
         else if(!status.equals("all") && !name.equals("all") && gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameOrderByIdAsc(LocalDate.parse(fromDate),toDate,status,name);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameOrderByGameNameAsc(LocalDate.parse(fromDate),toDate,status,name);
         }
         else if(status.equals("all") && !name.equals("all") && gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndGameNameOrderByIdAsc(LocalDate.parse(fromDate),toDate,name);
+            list = bookSlotRepository.findByGameDateBetweenAndGameNameOrderByGameNameAsc(LocalDate.parse(fromDate),toDate,name);
         }
 
 
@@ -135,25 +136,25 @@ public class GameController {
         String status=request.getParameter("status");
         LocalDate fromDate= LocalDate.parse(request.getParameter("fromDate"));
         LocalDate toDate= LocalDate.parse(request.getParameter("toDate"));
-        List<BookSlot> list = bookSlotRepository.findByGameDateBetween(fromDate,toDate);
+        List<BookSlot> list = bookSlotRepository.findByGameDateBetweenOrderByGameNameAsc(fromDate,toDate);
         if(name.equals("all")&&!status.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByIdAsc(fromDate,toDate,status,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByGameNameAsc(fromDate,toDate,status,gameMode);
         }
         else if(!status.equals("all") && !name.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameAndGameModeOrderByIdAsc(fromDate,toDate,status,name,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameAndGameModeOrderByGameNameAsc(fromDate,toDate,status,name,gameMode);
         }
         else if(!status.equals("all") && name.equals("all") && gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByIdAsc(fromDate,toDate,status);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByGameNameAsc(fromDate,toDate,status);
         }
         else if(name.equals("all") && status.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByIdAsc(fromDate,toDate,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByGameNameAsc(fromDate,toDate,gameMode);
         }
         else if(!name.equals("all") && (status.equals("all") && !gameMode.equals("all"))){
-            list = bookSlotRepository.findByGameDateBetweenAndGameNameAndGameModeOrderByIdAsc(fromDate,toDate,name,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndGameNameAndGameModeOrderByGameNameAsc(fromDate,toDate,name,gameMode);
         }
 
         else if(!status.equals("all") && !name.equals("all") && gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameOrderByIdAsc(fromDate,toDate,status,name);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameOrderByGameNameAsc(fromDate,toDate,status,name);
         }
 
         WebContext context = new WebContext(request, response, request.getServletContext());
@@ -171,7 +172,7 @@ public class GameController {
             renderer.layout();
             renderer.createPDF(ops, false);
             renderer.finishPDF();
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fromDate.toString() + "-" + toDate.toString() + ".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + name + ".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
         }
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/gameDataUser");
@@ -187,25 +188,25 @@ public class GameController {
         String status=request.getParameter("status");
         LocalDate fromDate= LocalDate.parse(request.getParameter("fromDate"));
         LocalDate toDate= LocalDate.parse(request.getParameter("toDate"));
-        List<BookSlot> list = bookSlotRepository.findByGameDateBetween(fromDate,toDate);
+        List<BookSlot> list = bookSlotRepository.findByGameDateBetweenOrderByGameNameAsc(fromDate,toDate);
         if(name.equals("all")&&!status.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByIdAsc(fromDate,toDate,status,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByGameNameAsc(fromDate,toDate,status,gameMode);
         }
         else if(!status.equals("all") && !name.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameAndGameModeOrderByIdAsc(fromDate,toDate,status,name,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameAndGameModeOrderByGameNameAsc(fromDate,toDate,status,name,gameMode);
         }
         else if(!status.equals("all") && name.equals("all") && gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByIdAsc(fromDate,toDate,status);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByGameNameAsc(fromDate,toDate,status);
         }
         else if(name.equals("all") && status.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByIdAsc(fromDate,toDate,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByGameNameAsc(fromDate,toDate,gameMode);
         }
         else if(!name.equals("all") && (status.equals("all") && !gameMode.equals("all"))){
-            list = bookSlotRepository.findByGameDateBetweenAndGameNameAndGameModeOrderByIdAsc(fromDate,toDate,name,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndGameNameAndGameModeOrderByGameNameAsc(fromDate,toDate,name,gameMode);
         }
 
         else if(!status.equals("all") && !name.equals("all") && gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameOrderByIdAsc(fromDate,toDate,status,name);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameNameOrderByGameNameAsc(fromDate,toDate,status,name);
         }
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet(body.get("name").toString());
@@ -217,7 +218,7 @@ public class GameController {
             //response1.putIfAbsent("msg","No Records Found");
             //response1.put("status", 202);
         }else {
-            DownloadCsvReport.getCsvReportDownload(response, header, list, "game_data.csv");
+            DownloadCsvReport.getCsvReportDownload(response, header, list, "code.csv");
         }
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/gameDataUser");
@@ -226,6 +227,90 @@ public class GameController {
 
 
     }
+
+
+    @GetMapping("/gameData")
+    public String slotViewOrderForm(Model model, HttpSession session) {
+        if (session.getAttribute("loggedIn").equals("true")) {
+            // List<User> users = (List<User>) userRepository.findAll();
+            List<Game> games = gamesRepository.findByOrderByIdDesc();
+            System.out.println("games:" + games);
+            model.addAttribute("game", games);
+            return "admin/gameData";
+        }
+        List messages = new ArrayList<>();
+        messages.add("Login First");
+        model.addAttribute("messages", messages);
+        return "redirect:/loginPage";
+    }
+    @PostMapping("/gameData")
+    public @ResponseBody String slotViewOrder(Model model, HttpServletResponse response, HttpServletRequest request) throws JsonProcessingException {
+        System.out.println("88888888888");
+        String name = request.getParameter("name");
+        System.out.println(name);
+//        String code = request.getParameter("code");
+//        System.out.println(code);
+//
+        List list = (List) gamesRepository.findByOrderByNameAsc();
+//        if(!name.equals("all")&&(code.equals("all"))){
+//            list= gamesRepository.findByName(name);
+//            System.out.println("kalyan1:"+list);
+//        }
+//        else if(name.equals("all")&&(!code.equals("all"))){
+//            list= gamesRepository.findByCode(code);
+//            System.out.println("kalyan2:"+list);
+//        }
+//        else if(!name.equals("all")&&(!code.equals("all"))){
+//            list= gamesRepository.findByNameAndCode(name,code);
+//            System.out.println("kalyan3:"+list);
+//        }
+
+        ObjectMapper mapper = mapperBuilder.build();
+        String output = mapper.writeValueAsString(list);
+        System.out.println("Excel Size -- " + list.size());
+
+        return output;
+    }
+    @GetMapping("/gamePdfData")
+    public ResponseEntity slotViewPdfUserOrder1(Model model, HttpServletResponse response, HttpServletRequest request) {
+        System.out.println("88888888888");
+        String name = request.getParameter("name");
+        System.out.println(name);
+        List list = (List) gamesRepository.findByOrderByNameAsc();
+        WebContext context = new WebContext(request, response, request.getServletContext());
+        context.setVariable("list", list);
+        String finalhtml = springTemplateEngine.process("admin/gamePdfData",context);
+        ByteArrayOutputStream ops = new ByteArrayOutputStream();
+        ITextRenderer renderer = new ITextRenderer();
+        System.out.println(finalhtml);
+        renderer.setDocumentFromString(finalhtml);
+        renderer.layout();
+        renderer.createPDF(ops, false);
+        renderer.finishPDF();
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+ request.getSession().getAttribute("loggedMobile").toString()+".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+
+    }
+    @GetMapping("/gameExcelData")
+    public ResponseEntity slotViewUserOrder2(HttpSession session, @RequestParam Map<String, String> body, Model model, HttpServletResponse response, HttpServletRequest request) throws Exception {
+        System.out.println("88888888888");
+        String name = request.getParameter("name");
+        System.out.println(name);
+        List list1 = (List) gamesRepository.findByOrderByNameAsc();
+        System.out.println("list:"+list1);
+        System.out.println("Excel Size -- " + list1.size());
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet(request.getSession().getAttribute("loggedMobile").toString());
+        HSSFRow Header = sheet.createRow(0);
+        int headercellStart = 0;
+        String header[] ={"code","name"};
+        // String header[]={"gameDate","slotCode","game"};
+        DownloadCsvReport4.getCsvReportDownload(response, header, list1,"name.csv");
+
+        return (ResponseEntity) ResponseEntity.status(203);
+
+    }
+
+
 
 
 }

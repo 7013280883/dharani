@@ -232,13 +232,13 @@ public class slotController {
         System.out.println(list);
         System.out.println("list:"+list.size());
         if(status.equals("all") && mobileNo.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByIdAsc(fromDate,toDate,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByGameNameAsc(fromDate,toDate,gameMode);
         } else if(!status.equals("all") && !mobileNo.equals("all") && !gameMode.equals("all")){
             list = bookSlotRepository.findByGameDateBetweenAndBookedByAndGameModeAndConfirmStatusOrderByIdAsc(fromDate,toDate,mobileNo,gameMode,status);
         } else if(!status.equals("all") && mobileNo.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByIdAsc(fromDate,toDate,status,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByGameNameAsc(fromDate,toDate,status,gameMode);
         } else if(!status.equals("all") && !mobileNo.equals("all") && gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndBookedByOrderByIdAsc(fromDate,toDate,status,mobileNo);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndBookedByOrderByGameNameAsc(fromDate,toDate,status,mobileNo);
         }else if(status.equals("all") && !mobileNo.equals("all") && gameMode.equals("all")){
             list = bookSlotRepository.findByGameDateBetweenAndBookedByOrderByIdAsc(fromDate,toDate,mobileNo);
         }
@@ -246,7 +246,7 @@ public class slotController {
 //            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByIdAsc(fromDate, toDate,status, gameMode);
 //        }
         else if(!status.equals("all") && mobileNo.equals("all") && gameMode.equals("all")) {
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByIdAsc(fromDate, toDate, status);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByGameNameAsc(fromDate, toDate, status);
         }
         else if(status.equals("all") && !mobileNo.equals("all") && !gameMode.equals("all")){
             list = bookSlotRepository.findByGameDateBetweenAndGameModeAndBookedByOrderByIdAsc(fromDate,toDate,gameMode,mobileNo);
@@ -276,19 +276,19 @@ public class slotController {
         System.out.println(list);
         System.out.println("list:"+list.size());
         if(status.equals("all") && mobileNo.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByIdAsc(fromDate,toDate,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByGameNameAsc(fromDate,toDate,gameMode);
         } else if(!status.equals("all") && !mobileNo.equals("all") && !gameMode.equals("all")){
             list = bookSlotRepository.findByGameDateBetweenAndBookedByAndGameModeAndConfirmStatusOrderByIdAsc(fromDate,toDate,mobileNo,gameMode,status);
         } else if(!status.equals("all") && mobileNo.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByIdAsc(fromDate,toDate,status,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByGameNameAsc(fromDate,toDate,status,gameMode);
         } else if(!status.equals("all") && !mobileNo.equals("all") && gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndBookedByOrderByIdAsc(fromDate,toDate,status,mobileNo);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndBookedByOrderByGameNameAsc(fromDate,toDate,status,mobileNo);
         }else if(status.equals("all") && !mobileNo.equals("all") && gameMode.equals("all")){
             list = bookSlotRepository.findByGameDateBetweenAndBookedByOrderByIdAsc(fromDate,toDate,mobileNo);
         }else if(status.equals("all") && !mobileNo.equals("all") && !gameMode.equals("all")) {
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByIdAsc(fromDate, toDate,status, gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByGameNameAsc(fromDate, toDate,status, gameMode);
         }else if(!status.equals("all") && mobileNo.equals("all") && gameMode.equals("all")) {
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByIdAsc(fromDate, toDate, status);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByGameNameAsc(fromDate, toDate, status);
         }
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet(body.get("mobileNo").toString());
@@ -300,7 +300,7 @@ public class slotController {
             //response1.putIfAbsent("msg","No Records Found");
             //response1.put("status", 202);
         }else {
-            DownloadCsvReport.getCsvReportDownload(response, header, list, "slot_data.csv");
+            DownloadCsvReport.getCsvReportDownload(response, header, list, "mobileNo.csv");
         }
 //        for (String i : header) {
 //            HSSFCellStyle style = workbook.createCellStyle();
@@ -364,19 +364,19 @@ public class slotController {
         System.out.println(list);
         System.out.println("list:"+list.size());
         if(status.equals("all") && mobileNo.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByIdAsc(fromDate,toDate,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndGameModeOrderByGameNameAsc(fromDate,toDate,gameMode);
         } else if(!status.equals("all") && !mobileNo.equals("all") && !gameMode.equals("all")){
             list = bookSlotRepository.findByGameDateBetweenAndBookedByAndGameModeAndConfirmStatusOrderByIdAsc(fromDate,toDate,mobileNo,gameMode,status);
         } else if(!status.equals("all") && mobileNo.equals("all") && !gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByIdAsc(fromDate,toDate,status,gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByGameNameAsc(fromDate,toDate,status,gameMode);
         } else if(!status.equals("all") && !mobileNo.equals("all") && gameMode.equals("all")){
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndBookedByOrderByIdAsc(fromDate,toDate,status,mobileNo);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndBookedByOrderByGameNameAsc(fromDate,toDate,status,mobileNo);
         }else if(status.equals("all") && !mobileNo.equals("all") && gameMode.equals("all")){
             list = bookSlotRepository.findByGameDateBetweenAndBookedByOrderByIdAsc(fromDate,toDate,mobileNo);
         }else if(status.equals("all") && !mobileNo.equals("all") && !gameMode.equals("all")) {
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByIdAsc(fromDate, toDate,status, gameMode);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusAndGameModeOrderByGameNameAsc(fromDate, toDate,status, gameMode);
         }else if(!status.equals("all") && mobileNo.equals("all") && gameMode.equals("all")) {
-            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByIdAsc(fromDate, toDate, status);
+            list = bookSlotRepository.findByGameDateBetweenAndConfirmStatusOrderByGameNameAsc(fromDate, toDate, status);
         }
         WebContext context = new WebContext(request, response, request.getServletContext());
         context.setVariable("list", list);
@@ -393,7 +393,7 @@ public class slotController {
             renderer.layout();
             renderer.createPDF(ops, false);
             renderer.finishPDF();
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fromDate.toString() + "-" + toDate.toString() + ".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + mobileNo.toString() + ".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
         }
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/slotViewData");
@@ -419,7 +419,7 @@ public class slotController {
         int headercellStart = 0;
         String header[] ={"gameDate","slotCode","gameMode","confirmStatus","bookedBy","approvedBy","RemarksByUser","RemarksByAdmin","bookTime"};
         // String header[]={"gameDate","slotCode","game"};
-        DownloadCsvReport.getCsvReportDownload(response, header, list, "invoice_data.csv");
+        DownloadCsvReport.getCsvReportDownload(response, header, list, "mob.csv");
 
 //        for (String i : header) {
 //            HSSFCellStyle style = workbook.createCellStyle();
@@ -518,7 +518,7 @@ public class slotController {
         System.out.println(dayType);
         List<Slot> list = new ArrayList<>();
         if(courtCode.equals("all")&&(dayType.equals("all"))){
-            list = (List<Slot>) slotRepository.findAll();
+            list = (List<Slot>) slotRepository.findByOrderBySlotCodeAsc();
             System.out.println("kalyan:"+list);
         }
         else if(!courtCode.equals("all")&&(dayType.equals("all"))){
@@ -547,7 +547,7 @@ public class slotController {
         System.out.println(dayType);
         List<Slot> list = new ArrayList<>();
         if(courtCode.equals("all")&&(dayType.equals("all"))){
-            list = (List<Slot>) slotRepository.findAll();
+            list = (List<Slot>) slotRepository.findByOrderBySlotCodeAsc();
             System.out.println("kalyan:"+list);
         }
         else if(!courtCode.equals("all")&&(dayType.equals("all"))){
@@ -569,7 +569,7 @@ public class slotController {
         renderer.layout();
         renderer.createPDF(ops, false);
         renderer.finishPDF();
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+courtCode+ request.getSession().getAttribute("loggedMobile").toString()+".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+ request.getSession().getAttribute("loggedMobile").toString()+".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
 
     }
     @GetMapping("/slotExcelData1")
@@ -581,7 +581,7 @@ public class slotController {
         System.out.println(dayType);
         List<Slot> list1 = new ArrayList<>();
         if(courtCode.equals("all")&&(dayType.equals("all"))){
-            list1 = (List<Slot>) slotRepository.findAll();
+            list1 = (List<Slot>) slotRepository.findByOrderBySlotCodeAsc();
             System.out.println("kalyan:"+list1);
         }
         else if(!courtCode.equals("all")&&(dayType.equals("all"))){
@@ -600,7 +600,7 @@ public class slotController {
         int headercellStart = 0;
         String header[] ={"slotCode","courtCode","dayType","startHour","endHour","slotLength"};
         // String header[]={"gameDate","slotCode","game"};
-        DownloadCsvReport2.getCsvReportDownload(response, header, list1, "invoice_data.csv");
+        DownloadCsvReport2.getCsvReportDownload(response, header, list1, "courtCode.csv");
 
         return (ResponseEntity) ResponseEntity.status(203);
 

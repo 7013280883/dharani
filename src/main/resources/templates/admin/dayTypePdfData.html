@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <style>
+  <style>
     table,
     th,
     td {
@@ -25,19 +25,21 @@
 </head>
 <body>
 <table class="table" style="width:100%; border: 2px  black;" id="purchaseTable" >
-    <thead style="background-color:silver;color: black;">
+  <thead style="background-color:silver;color: black;">
 
-    <td scope="col">Code</td>
-    <td scope="col">Game Name</td>
+  <td scope="col"> Code</td>
+  <td scope="col">Name</td>
 
-    </thead>
-    <tbody>
-    <tr th:each="lists : ${list}">
-        <td scope="col"><span th:text="${lists.code}"></span></td>
-        <td scope="col"><span th:text="${lists.name}"></span></td>
+  </thead>
+  <tbody>
+  <tr th:each="lists : ${list}">
+    <td scope="col"><span th:text="${lists.code}"></span></td>
+    <td scope="col"><span th:text="${lists.name}"></span></td>
 
-    </tr>
-    </tbody>
+
+
+  </tr>
+  </tbody>
 </table>
 </body>
 </html>

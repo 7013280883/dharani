@@ -104,7 +104,7 @@ public class courtController {
         String authority = request.getParameter("authority");
         System.out.println(authority);
 //
-        List list = (List) courtRepository.findAll();
+        List list = (List) courtRepository.findByOrderByCodeAsc();
         if(!name.equals("all")&&(authority.equals("all"))){
             list= courtRepository.findByName(name);
             System.out.println("kalyan:"+list);
@@ -134,7 +134,7 @@ public class courtController {
         String authority = request.getParameter("authority");
         System.out.println(authority);
 //
-        List list = (List) courtRepository.findAll();
+        List list = (List) courtRepository.findByOrderByCodeAsc();
         if(!name.equals("all")&&(authority.equals("all"))){
             list= courtRepository.findByName(name);
             System.out.println("kalyan:"+list);
@@ -159,7 +159,7 @@ public class courtController {
         renderer.layout();
         renderer.createPDF(ops, false);
         renderer.finishPDF();
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+name+ request.getSession().getAttribute("loggedMobile").toString()+".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+ request.getSession().getAttribute("loggedMobile").toString()+".pdf").contentType(MediaType.APPLICATION_OCTET_STREAM).body(ops.toByteArray());
 
     }
     @GetMapping("/courtExcelData")
@@ -170,7 +170,7 @@ public class courtController {
         String authority = request.getParameter("authority");
         System.out.println(authority);
 //
-        List list1 = (List) courtRepository.findAll();
+        List list1 = (List) courtRepository.findByOrderByCodeAsc();
         if(!name.equals("all")&&(authority.equals("all"))){
             list1= courtRepository.findByName(name);
             System.out.println("kalyan:"+list1);
@@ -192,7 +192,7 @@ public class courtController {
         int headercellStart = 0;
         String header[] ={"code","name","authority","startDate","endDate"};
         // String header[]={"gameDate","slotCode","game"};
-        DownloadCsvReport3.getCsvReportDownload(response, header, list1, "invoice_data.csv");
+        DownloadCsvReport3.getCsvReportDownload(response, header, list1, "name.csv");
 
         return (ResponseEntity) ResponseEntity.status(203);
 

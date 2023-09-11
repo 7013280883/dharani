@@ -16,18 +16,19 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     List<User> findByOrderByIdDesc();
     User findByPassword( String Password);
-    List <User> findByUserName(String userName);
-    List <User> findByUserType(String userType);
-    List <User> findByCountry(String country);
-    List <User> findByReferral(String referral);
-    List <User> findByUserNameAndUserType(String userName,String userType);
-    List <User> findByCountryAndReferral(String country,String referral);
-    List <User> findByUserNameAndReferral(String userName,String referral);
-    List <User> findByCountryAndUserType(String country,String userType);
-    List <User> findByCountryAndUserTypeAndUserName(String country,String userType,String userName);
-    List <User>  findByCountryAndUserNameAndReferral(String country,String userName,String referral);
-    List <User> findByUserNameAndUserTypeAndReferral(String userName,String userType,String referral);
-    List <User> findByCountryAndUserTypeAndReferral(String country,String userType,String referral);
-    List <User> findByCountryAndUserTypeAndReferralAndUserName(String country,String userType,String referral,String userName);
+    List <User> findByUserNameOrderByUserNameAsc(String userName);
+    List<User> findByOrderByUserNameAsc();
+    List <User> findByUserTypeOrderByUserNameAsc(String userType);
+    List <User> findByCountryOrderByUserNameAsc(String country);
+    List <User> findByReferralOrderByUserNameAsc(String referral);
+    List <User> findByUserNameAndUserTypeOrderByUserNameAsc(String userName,String userType);
+    List <User> findByCountryAndReferralOrderByUserNameAsc(String country,String referral);
+    List <User> findByUserNameAndReferralOrderByUserNameAsc(String userName,String referral);
+    List <User> findByCountryAndUserTypeOrderByUserNameAsc(String country,String userType);
+    List <User> findByCountryAndUserTypeAndUserNameOrderByUserNameAsc(String country,String userType,String userName);
+    List <User>  findByCountryAndUserNameAndReferralOrderByUserNameAsc(String country,String userName,String referral);
+    List <User> findByUserNameAndUserTypeAndReferralOrderByUserNameAsc(String userName,String userType,String referral);
+    List <User> findByCountryAndUserTypeAndReferralOrderByUserNameAsc(String country,String userType,String referral);
+    List <User> findByCountryAndUserTypeAndReferralAndUserNameOrderByUserNameAsc(String country,String userType,String referral,String userName);
 
 }

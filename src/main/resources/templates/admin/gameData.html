@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+  <title></title>
+  <style>
+    #username{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  }
+  input#fromDate{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  text-align: center;
+  }
+  input#toDate{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  text-align: center;
+  }
+  #active{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  }
+  body {
+    margin: 0;   /* Remove body margins */
+}
+
+
+  </style>
+  <div class="container">
+    <div th:replace="fragments/message :: message_html"></div>
+  </div>
+</head>
+<body style="background-color:Blonde;">
+<div layout:fragment="content">
+  <div class="container">
+    <h4 class = "text-middle"> <font color="#000080 ">
+      <b> GAME DATA REPORTS</b> </font></h4>
+    <hr color="blue">
+
+    <div class="row auto-align">
+      <div class="col">
+        <label for="name">name</label>
+        <select id="name" class="form-control" name="name">
+          <option value="all">all</option>
+          <option th:each="i : ${game}" th:value="${i.name}"><span th:text="${i.name}"></span></option>
+        </select>
+      </div>
+      <!--            <div class="col">-->
+      <!--                <label for="code">Code</label>-->
+      <!--                <select id="code" class="form-control" name="code">-->
+      <!--                    <option value="all">all</option>-->
+      <!--                    <option th:each="i : ${game}" th:value="${i.code}"><span th:text="${i.code}"></span></option>-->
+      <!--                </select>-->
+      <!--            </div>-->
+    </div>
+    <br>
+    <div class="box-footer">
+      <button id="getData" class="btn btn-primary">Get Data</button>
+      <button id="pdfDownload" class="btn btn-primary"> Download PDF</button>
+      <button id="downloadExcel" class="btn btn-primary"> Download Excel</button>
+
+    </div>
+
+
+
+    <hr>
+
+    <div class="container">
+      <table class="table" style="width:100%" id="purchaseTable" border=0>
+        <thead>
+        <tr>
+
+          <th scope="col">Code</th>
+          <th scope="col">Game Name</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+      <h4><center> <p id="notfound" style="display:none;"><font color="blue">---------No Records found---------</font> </p></center></h4>
+    </div>
+
+  </div>
+  <script>
+
+ $('#getData').click(function() {
+
+var name = $("#name").val();
+var code = $("#code").val();
+$("#purchaseTable tbody tr").remove();
+
+$.ajax({
+async:'false',
+ type: 'POST',
+ url: '/gameData',
+      data: {
+     "name":name,
+     "code":code,
+
+
+      },
+       success: function(data) {
+
+ const jsonObject = JSON.parse(data);
+    var tr = '';
+    $.each(jsonObject, function(i, item) {
+tr += '<tr><td>' + item.code + '</td><td>' + item.name + '</td>tr>';
+    });
+   console.log(tr);
+   $('#purchaseTable').append(tr);
+   $('#notfound').hide();
+const isEmpty = document.querySelectorAll("#purchaseTable tr").length <= 1;
+if(isEmpty==true){
+
+$('#notfound').show();
+}
+
+}
+});
+});
+
+$(document).ready(function() {
+var name = $("#name").val();
+var code = $("#code").val();
+
+$('#pdfDownload').click(function() {
+var name = $("#name").val();
+var code = $("#code").val();
+window.location.href="/gamePdfData?name="+ name  +"&code="+code
+});
+});
+
+
+$(document).ready(function() {
+var name = $("#name").val();
+var code = $("#code").val();
+$('#downloadExcel').click(function() {
+var name = $("#name").val();
+var code = $("#code").val();
+window.location.href="/gameExcelData?name="+ name  +"&code="+code});
+});
+
+</script>
+</div>
+</body>
+
+</html>

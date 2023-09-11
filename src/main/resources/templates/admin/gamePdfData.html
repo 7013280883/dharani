@@ -26,35 +26,16 @@
 <body>
 <table class="table" style="width:100%; border: 2px  black;" id="purchaseTable" >
     <thead style="background-color:silver;color: black;">
-    <td scope="col">Game Date</td>
+
+    <td scope="col">Code</td>
     <td scope="col">Game Name</td>
-    <td scope="col">Start Time</td>
-    <td scope="col">End Time</td>
-    <td scope="col">Court Code</td>
-    <!--    <td scope="col">Slot Code</td>-->
-    <td scope="col">Game Mode</td>
-    <td scope="col">Confirm Status</td>
-    <td scope="col">Booked By</td>
-    <td scope="col">Book time</td>
-    <td scope="col">Approved By</td>
-    <td scope="col">Remarks By user</td>
-    <td scope="col">Remarks By Admin</td>
+
     </thead>
     <tbody>
     <tr th:each="lists : ${list}">
-        <td scope="col"><span th:text="${lists.gameDate}"></span></td>
-        <td scope="col"><span th:text="${lists.gameName}"></span></td>
-        <td scope="col"><span th:text="${lists.startTime}"></span></td>
-        <td scope="col"><span th:text="${lists.endTime}"></span></td>
-        <td scope="col"><span th:text="${lists.courtCode}"></span></td>
-        <!--        <td scope="col"><span th:text="${lists.slotCode}"></span></td>-->
-        <td scope="col"><span th:text="${lists.gameMode}"></span></td>
-        <td scope="col"><span th:text="${lists.confirmStatus}"></span></td>
-        <td scope="col"><span th:text="${lists.bookedBy}"></span></td>
-        <td scope="col"><span th:text="${lists.bookTime}"></span></td>
-        <td scope="col"><span th:text="${lists.approvedBy}"></span></td>
-        <td scope="col"><span th:text="${lists.remarksByUser}"></span></td>
-        <td scope="col"><span th:text="${lists.remarksByAdmin}"></span></td>
+        <td scope="col"><span th:text="${lists.code}"></span></td>
+        <td scope="col"><span th:text="${lists.name}"></span></td>
+
     </tr>
     </tbody>
 </table>

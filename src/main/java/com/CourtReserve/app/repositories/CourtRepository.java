@@ -9,6 +9,7 @@ import java.util.List;
 public interface CourtRepository extends CrudRepository<Court, Integer> {
     Court findByCode(String code);
     List<Court> findByName(String Name);
+    List<Court>findByOrderByCodeAsc();
 
     @Override
     void deleteById(Integer integer);

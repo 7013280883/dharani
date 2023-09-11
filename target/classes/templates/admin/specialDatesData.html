@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+  <title></title>
+  <style>
+    #username{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  }
+  input#fromDate{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  text-align: center;
+  }
+  input#toDate{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  text-align: center;
+  }
+  #active{
+  width:200px;
+  border:1px solid blue;
+  border-radius:2px
+  outline:0;
+  padding:2px;
+  background-colour:#fff;
+  }
+  body {
+    margin: 0;   /* Remove body margins */
+}
+
+
+  </style>
+  <div class="container">
+    <div th:replace="fragments/message :: message_html"></div>
+  </div>
+</head>
+<body style="background-color:Blonde;">
+<div layout:fragment="content">
+  <div class="container">
+    <h4 class = "text-middle"> <font color="#000080 ">
+      <b> SPECIAL DATES DATA REPORTS</b> </font></h4>
+    <hr color="blue">
+
+    <div class="row auto-align">
+      <div class="col">
+        <label for="courtCode">courtCode</label>
+        <select id="courtCode" class="form-control" name="courtCode">
+          <option value="all">all</option>
+          <option th:each="i : ${specialDate}" th:value="${i.courtCode}"><span th:text="${i.courtCode}"></span></option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="dayType">dayType</label>
+        <select id="dayType" class="form-control" name="dayType">
+          <option value="all">all</option>
+          <option th:each="i : ${specialDate}" th:value="${i.dayType}"><span th:text="${i.dayType}"></span></option>
+        </select>
+      </div>
+      <!--      <div class="col">-->
+      <!--        <label for="startDate">startDate</label>-->
+      <!--        <input id="startDate" name="startDate" class="form-control" type="date" th:min="${dateTime}" placeholder="dd/mm/yyyy">-->
+      <!--      </div><div class="col">-->
+      <!--      <label for="endDate">endDate</label>-->
+      <!--      <input id="endDate" name="endDate" class="form-control" type="date" th:min="${dateTime}" placeholder="dd/mm/yyyy">-->
+      <!--    </div>-->
+
+
+    </div>
+    <br>
+    <div class="box-footer">
+      <button id="getData" class="btn btn-primary">Get Data</button>
+      <button id="pdfDownload" class="btn btn-primary"> Download PDF</button>
+      <button id="downloadExcel" class="btn btn-primary"> Download Excel</button>
+
+    </div>
+
+
+
+    <hr>
+
+    <div class="container">
+      <table class="table" style="width:100%" id="purchaseTable" border=0>
+        <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Code</th>
+          <th scope="col">Day Type</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+      <h4><center> <p id="notfound" style="display:none;"><font color="blue">---------No Records found---------</font> </p></center></h4>
+    </div>
+
+  </div>
+  <script>
+
+ $('#getData').click(function() {
+
+var courtCode = $("#courtCode").val();
+//alert(courtCode);
+var dayType = $("#dayType").val();
+//alert(dayType);
+$("#purchaseTable tbody tr").remove();
+
+$.ajax({
+async:'false',
+ type: 'POST',
+ url: '/specialDatesData',
+      data: {
+     "courtCode":courtCode,
+     "dayType":dayType,
+
+
+      },
+       success: function(data) {
+
+ const jsonObject = JSON.parse(data);
+    var tr = '';
+    $.each(jsonObject, function(i, item) {
+tr += '<tr><td>' + item.date + '</td><td>' + item.courtCode + '</td><td>' + item.dayType + '</td>tr>';
+    });
+   console.log(tr);
+   $('#purchaseTable').append(tr);
+   $('#notfound').hide();
+const isEmpty = document.querySelectorAll("#purchaseTable tr").length <= 1;
+if(isEmpty==true){
+
+$('#notfound').show();
+}
+
+}
+});
+});
+
+$(document).ready(function() {
+var courtCode = $("#courtCode").val();
+//alert(courtCode);
+var dayType = $("#dayType").val();
+//alert(dayType);
+
+$('#pdfDownload').click(function() {
+var courtCode = $("#courtCode").val();
+//alert(courtCode);
+var dayType = $("#dayType").val();
+//alert(dayType);
+window.location.href="/specialDatesPdfData?courtCode="+ courtCode  +"&dayType="+dayType
+});
+});
+
+
+$(document).ready(function() {
+var courtCode = $("#courtCode").val();
+//alert(courtCode);
+var dayType = $("#dayType").val();
+//alert(dayType);
+$('#downloadExcel').click(function() {
+var courtCode = $("#courtCode").val();
+//alert(courtCode);
+var dayType = $("#dayType").val();
+//alert(dayType);
+window.location.href="/specialDatesExcelData?courtCode="+ courtCode  +"&dayType="+dayType});
+});
+
+</script>
+</div>
+</body>
+
+</html>
