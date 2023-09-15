@@ -31,10 +31,8 @@ import javax.servlet.http.HttpSession;
 import java.io.ByteArrayOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class entryController {
@@ -296,9 +294,29 @@ public String changePwdHtmlForm(Model model, HttpSession session){
         if (session.getAttribute("loggedIn").equals("true")) {
             // List<User> users = (List<User>) userRepository.findAll();
             List<User> users = userRepository.findByOrderByIdDesc();
-
             System.out.println("users:" + users);
+            System.out.println("users:" + users.size());
+            Set<String> uniqueUsernames = new HashSet<>();
+            List<User> filteredUsers = users.stream()
+                    .filter(user -> uniqueUsernames.add(user.getUserType()))
+                    .collect(Collectors.toList());
+            System.out.println("users1:" + users);
+            System.out.println("users2:" + users.size());
+            List<User> filteredUsers1 = users.stream()
+                    .filter(user -> uniqueUsernames.add(user.getCountry()))
+                    .collect(Collectors.toList());
+            System.out.println("users3:" + users);
+            System.out.println("users4:" + users.size());
+            List<User> filteredUsers2 = users.stream()
+                    .filter(user -> uniqueUsernames.add(user.getReferral()))
+                    .collect(Collectors.toList());
+            System.out.println("users5:" + users);
+            System.out.println("users6:" + users.size());
+            //bla----------
             model.addAttribute("user", users);
+            model.addAttribute("users", filteredUsers);
+            model.addAttribute("users1", filteredUsers1);
+            model.addAttribute("users2", filteredUsers2);
             return "admin/userData";
         }
         List messages = new ArrayList<>();

@@ -6,46 +6,46 @@
 
     <title></title>
     <style>
-    #username{
-  width:200px;
-  border:1px solid blue;
-  border-radius:2px
-  outline:0;
-  padding:2px;
-  background-colour:#fff;
-  }
-  input#fromDate{
-  width:200px;
-  border:1px solid blue;
-  border-radius:2px
-  outline:0;
-  padding:2px;
-  background-colour:#fff;
-  text-align: center;
-  }
-  input#toDate{
-  width:200px;
-  border:1px solid blue;
-  border-radius:2px
-  outline:0;
-  padding:2px;
-  background-colour:#fff;
-  text-align: center;
-  }
-  #active{
-  width:200px;
-  border:1px solid blue;
-  border-radius:2px
-  outline:0;
-  padding:2px;
-  background-colour:#fff;
-  }
-  body {
-    margin: 0;   /* Remove body margins */
-}
+        #username{
+            width:200px;
+            border:1px solid blue;
+            border-radius:2px;
+            outline:0;
+            padding:2px;
+            background-colour:#fff;
+        }
+        input#fromDate{
+            width:200px;
+            border:1px solid blue;
+            border-radius:2px;
+            outline:0;
+            padding:2px;
+            background-colour:#fff;
+            text-align: center;
+        }
+        input#toDate{
+            width:200px;
+            border:1px solid blue;
+            border-radius:2px;
+            outline:0;
+            padding:2px;
+            background-colour:#fff;
+            text-align: center;
+        }
+        #active{
+            width:200px;
+            border:1px solid blue;
+            border-radius:2px;
+            outline:0;
+            padding:2px;
+            background-colour:#fff;
+        }
+        body {
+            margin: 0;   /* Remove body margins */
+        }
 
 
-  </style>
+    </style>
     <div class="container">
         <div th:replace="fragments/message :: message_html"></div>
     </div>
@@ -69,7 +69,7 @@
                 <label for="authority">authority</label>
                 <select id="authority" class="form-control" name="authority">
                     <option value="all">all</option>
-                    <option th:each="i : ${court}" th:value="${i.authority}"><span th:text="${i.authority}"></span></option>
+                    <option th:each="i : ${courts}" th:value="${i.authority}"><span th:text="${i.authority}"></span></option>
                 </select>
             </div>
             <!--      <div class="col">-->
@@ -116,65 +116,65 @@
     </div>
     <script>
 
- $('#getData').click(function() {
+        $('#getData').click(function() {
 
-var name = $("#name").val();
-var authority = $("#authority").val();
-$("#purchaseTable tbody tr").remove();
+            var name = $("#name").val();
+            var authority = $("#authority").val();
+            $("#purchaseTable tbody tr").remove();
 
-$.ajax({
-async:'false',
- type: 'POST',
- url: '/courtData',
-      data: {
-     "name":name,
-     "authority":authority,
-
-
-      },
-       success: function(data) {
-
- const jsonObject = JSON.parse(data);
-    var tr = '';
-    $.each(jsonObject, function(i, item) {
-tr += '<tr><td>' + item.code + '</td><td>' + item.name + '</td><td>' + item.authority + '</td><td>' + item.startDate + '</td><td>' + item.endDate + '</td>tr>';
-
-    });
-   console.log(tr);
-   $('#purchaseTable').append(tr);
-   $('#notfound').hide();
-const isEmpty = document.querySelectorAll("#purchaseTable tr").length <= 1;
-if(isEmpty==true){
-
-$('#notfound').show();
-}
-
-}
-});
-});
-
-$(document).ready(function() {
-var name = $("#name").val();
-var authority = $("#authority").val();
-
-$('#pdfDownload').click(function() {
-var name = $("#name").val();
-var authority = $("#authority").val();
-window.location.href="/courtPdfData?name="+ name  +"&authority="+authority
-});
-});
+            $.ajax({
+                async:'false',
+                type: 'POST',
+                url: '/courtData',
+                data: {
+                    "name":name,
+                    "authority":authority,
 
 
-$(document).ready(function() {
-var name = $("#name").val();
-var authority = $("#authority").val();
-$('#downloadExcel').click(function() {
-var name = $("#name").val();
-var authority = $("#authority").val();
-window.location.href="/courtExcelData?name="+ name  +"&authority="+authority});
-});
+                },
+                success: function(data) {
 
-</script>
+                    const jsonObject = JSON.parse(data);
+                    var tr = '';
+                    $.each(jsonObject, function(i, item) {
+                        tr += '<tr><td>' + item.code + '</td><td>' + item.name + '</td><td>' + item.authority + '</td><td>' + item.startDate + '</td><td>' + item.endDate + '</td>tr>';
+
+                    });
+                    console.log(tr);
+                    $('#purchaseTable').append(tr);
+                    $('#notfound').hide();
+                    const isEmpty = document.querySelectorAll("#purchaseTable tr").length <= 1;
+                    if(isEmpty==true){
+
+                        $('#notfound').show();
+                    }
+
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            var name = $("#name").val();
+            var authority = $("#authority").val();
+
+            $('#pdfDownload').click(function() {
+                var name = $("#name").val();
+                var authority = $("#authority").val();
+                window.location.href="/courtPdfData?name="+ name  +"&authority="+authority
+            });
+        });
+
+
+        $(document).ready(function() {
+            var name = $("#name").val();
+            var authority = $("#authority").val();
+            $('#downloadExcel').click(function() {
+                var name = $("#name").val();
+                var authority = $("#authority").val();
+                window.location.href="/courtExcelData?name="+ name  +"&authority="+authority});
+        });
+
+    </script>
 </div>
 </body>
 

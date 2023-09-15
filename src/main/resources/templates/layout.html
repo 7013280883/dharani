@@ -11,7 +11,7 @@
 
     <title></title>
     <style type="text/css">
-     footer {
+        footer {
             text-align:center;
             padding: 5px;
             background-color: #abbaba;
@@ -19,66 +19,66 @@
         }
 
         .scrolling-wrapper{
-	overflow-x: auto;
-}
+            overflow-x: auto;
+        }
 
-  .navbar .navbar-default{
-  background-image: url("C:\Users\krao6\Downloads/kalyan.jpg");
-}
-.navbar-nav li:hover > ul.dropdown-menu {
-    display: block;
-}
-.dropdown-submenu {
-    position:relative;
-}
-.dropdown-submenu > .dropdown-menu {
-    top: 0;
-    left: 100%;
-    margin-top:-6px;
-}
+        .navbar .navbar-default{
+            background-image: url("C:\Users\krao6\Downloads/kalyan.jpg");
+        }
+        .navbar-nav li:hover > ul.dropdown-menu {
+            display: block;
+        }
+        .dropdown-submenu {
+            position:relative;
+        }
+        .dropdown-submenu > .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top:-6px;
+        }
 
-/* rotate caret on hover */
-.dropdown-menu > li > a:hover:after {
-    text-decoration: underline;
-    transform: rotate(-90deg);
-}
+        /* rotate caret on hover */
+        .dropdown-menu > li > a:hover:after {
+            text-decoration: underline;
+            transform: rotate(-90deg);
+        }
 
-body {
-  background-image: url("jacknjill.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
-}
-.logo img {
-    width: 100%;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 50%;
-    box-shadow: 0px 0px 3px #5f5f5f,
-        0px 0px 0px 5px #ecf0f3,
-        8px 8px 15px #a7aaa7,
-        -8px -8px 15px #fff;
-}
+        body {
+            background-image: url("jacknjill.jpg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .logo img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0px 0px 3px #5f5f5f,
+            0px 0px 0px 5px #ecf0f3,
+            8px 8px 15px #a7aaa7,
+            -8px -8px 15px #fff;
+        }
 
-.header_bar {
-    position: top;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-  background-color:  #70b8ff ;
-    text-align: center;
-    }
+        .header_bar {
+            position: top;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color:  #70b8ff ;
+            text-align: center;
+        }
 
-.footer_bar {
-   position: fixed;
-   left: 0;
-   bottom: 0;
-   width: 100%;
-   background-color:  #70b8ff;
-   text-align: center;
-}
+        .footer_bar {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color:  #70b8ff;
+            text-align: center;
+        }
 
-  </style>
+    </style>
 </head>
 <body style="background-color:#fff;">
 
@@ -157,14 +157,19 @@ body {
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
+                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#"><font color="green"><b>Admin</b></font></a>
+                            <ul class="dropdown-menu">
+                                <li class="navbar-nav">
+
+                                    <a class="dropdown-item" href="/userReports"> My Profile</a>
+                                </li>
+                            </ul>
+                        </li>
 
                         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#"> <font color="green"><b>Masters</b></font></a>
                             <ul class="dropdown-menu">
 
-                                <li class="navbar-nav">
 
-                                    <a class="dropdown-item" href="/userReports">User Data</a>
-                                </li>
                                 <li class="navbar-nav">
                                     <a class="dropdown-item" href="/courtData">Court Data </a>
                                 </li>
@@ -242,11 +247,17 @@ body {
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
+                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#"><font color="green"><b>Admin</b></font></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/userData">All User's Data </a></li>
+                            </ul>
+                        </li>
+
 
                         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#"> <font color="green"><b>Masters</b></font></a>
                             <ul class="dropdown-menu">
 
-                                <li><a class="dropdown-item" href="/userData">User Data </a></li>
+
                                 <li><a class="dropdown-item" href="/gameData">Game Data</a></li>
                                 <li class="navbar-nav">
                                     <a class="dropdown-item" href="/courtData">Court Data </a>
@@ -294,7 +305,7 @@ body {
 
                 <img class="account-icon" alt="" th:src="@{images/letter-a.png}" align="center" width="30" height="24">
             </li>
-            <li class="collapse navbar-collapse" id="navbarNavAltMarkup" th:if="${session.loggedIn == 'true' && session.user.userType == 'Member' }" >
+            <li class="collapse navbar-collapse" id="navbarNavAltMarkup" th:if="${session.loggedIn == 'true' &&  (session.user.userType != 'Admin' )}" >
 
                 <img class="account-icon" alt="" th:src="@{images/M.png}" align="center" width="30" height="34">
 
@@ -306,10 +317,10 @@ body {
 <div th:fragment="navbar_footer">
     <div class="footer_bar">
         <font color=" #ffff00 ">
-            <b> www.bookmycourts.com </b>
+            <b> www.bookmycourt.com </b>
         </font>
         <font color="black ">
-            <b> @Copyright ©2023 Version_11-09-2023-C</b>
+            <b> @Copyright ©2023 Version_11-09-2023-Z</b>
         </font>
 
         <font color="#ffff00">
@@ -324,12 +335,12 @@ body {
 </body>
 <script type="text/javascript">
 
-$(document).ready(function(){
-$('#submit').prop('disabled',true);
-});
-$("#mobileNo, #oldPassword,#newPassword,#con_newoldPassword").change(function(){
-$('#submit').prop('disabled',false);
-});
+    $(document).ready(function(){
+        $('#submit').prop('disabled',true);
+    });
+    $("#mobileNo, #oldPassword,#newPassword,#con_newoldPassword").change(function(){
+        $('#submit').prop('disabled',false);
+    });
 
 
 </script>

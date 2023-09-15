@@ -28,10 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -87,7 +84,15 @@ public class courtController {
             // List<User> users = (List<User>) userRepository.findAll();
             List<Court> courts = courtRepository.findByOrderByIdDesc();
             System.out.println("courts:" + courts);
+            System.out.println("courts:" + courts.size());
+            Set<String> uniqueUsernames = new HashSet<>();
+            List<Court> filteredUsers = courts.stream()
+                    .filter(user -> uniqueUsernames.add(user.getAuthority()))
+                    .collect(Collectors.toList());
+            System.out.println("users1:" + filteredUsers);
+            System.out.println("users2:" + filteredUsers.size());
             model.addAttribute("court", courts);
+            model.addAttribute("courts", filteredUsers);
             return "admin/courtData";
         }
         List messages = new ArrayList<>();
@@ -198,4 +203,3 @@ public class courtController {
 
     }
 }
-

@@ -80,6 +80,7 @@ public class bookSlotRestController {
 
         bookSlot.setRemarksByUser(map.get("remarks").toString());
         String bkNo= dateModified.format(DateTimeFormatter.ofPattern("ddMMyyyy"))+ "-"+slot.getStartHour() +"-"+series;
+        System.out.println("bkNo:"+bkNo);
         bookSlot.setBookingNo(bkNo);
         bookSlotRepository.save(bookSlot);
 

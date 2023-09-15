@@ -30,5 +30,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
     List <User> findByUserNameAndUserTypeAndReferralOrderByUserNameAsc(String userName,String userType,String referral);
     List <User> findByCountryAndUserTypeAndReferralOrderByUserNameAsc(String country,String userType,String referral);
     List <User> findByCountryAndUserTypeAndReferralAndUserNameOrderByUserNameAsc(String country,String userType,String referral,String userName);
+//    @Query("select distinct user_type from user")
+//
+//    List<User> findByOrderByDistinctUserType();
+
 
 }

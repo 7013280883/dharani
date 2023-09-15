@@ -10,133 +10,156 @@
     <script th:src="@{js/calendarUser.js}"></script>
     <h1 style="display: none;" id="bookingDate" th:text="${date}"></h1>
     <link rel="stylesheet" th:href="@{css/calendar.css}">
-    <div class="container calendar" id="main" style="width: 350px;">
-        <h2 class="text-center"><a id="left" href="#" style="text-decoration: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                 class="bi bi-arrow-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-            </svg>
-        </a><span>&nbsp;</span><span id="month"> </span><span>&nbsp;</span><span
-                id="year"> </span><span>&nbsp;</span><a id="right" href="#" style="text-decoration: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                 class="bi bi-arrow-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-            </svg>
-        </a></h2>
-        <div class="row">
-            <div class="container">
-                <table class="table caltable"></table>
+    <div class="container calendar" id="main" style="width: 400px; float: left;">
+        <div class="container calendar" id="main" style="width: 350px;">
+            <h2 class="text-center"><a id="left" href="#" style="text-decoration: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                </svg>
+            </a><span>&nbsp;</span><span id="month"> </span><span>&nbsp;</span><span
+                    id="year"> </span><span>&nbsp;</span><a id="right" href="#" style="text-decoration: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                </svg>
+            </a></h2>
+            <div class="row">
+                <div class="container">
+                    <table class="table caltable"></table>
+                    <!-- ... (your calendar content) ... -->
+                </div>
             </div>
         </div>
     </div>
     <h3>Selected Date : <i id = "current-date" ></i></h3>
     <div class="container">
-<!--        <form class="form-control" method="get" action="#">-->
-<!--            <div class="form-group">-->
-<!--            <label for="bookingDate">Select Date</label>-->
-<!--            <input class="form-control" type="date" id="bookingDate" name="date" th:value="${date}">-->
-<!--            </div>-->
-<!--            <button type="submit" class="btn btn-primary">Get Slots</button>-->
-<!--        </form>-->
+        <!--        <form class="form-control" method="get" action="#">-->
+        <!--            <div class="form-group">-->
+        <!--            <label for="bookingDate">Select Date</label>-->
+        <!--             <input class="form-control" type="date" id="bookingDate" name="date" th:value="${date}">-->
+        <!--            </div>-->
+        <!--            <button type="submit" class="btn btn-primary">Get Slots</button>-->
+        <!--        </form>-->
 
         <hr>
-<!--        <table class="table table-striped " width="80%">-->
-<!--            <tbody>-->
-<!--            <tr th:each="court: ${courts}"  class="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">-->
-<!--                <td style="width: 150px;" th:text="${court.Name+ ' - ' +court.code}"></td>-->
-<!--                <td th:each="slot :${slots}" th:if="${slot.courtCode == court.code}" style="width: 120px;" th:text="${slot.startHour + '-' + slot.endHour}"></td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-        <div class="container" th:each="court: ${courts}" >
-            <div class="row" >
-                <div class="col">
-                    <h4 th:text="${court.name+'-'+court.code }" th:onclick="showSlots([[${court.code}]])"></h4>
-                </div>
-            </div>
-            <hr>
-            <div th:class="${'container ' + court.code}" style="background-color: #F7F7F9;display: none; padding:2px;">
-            <div  th:class="${'row'}" th:each="slot :${slots}" th:if="${slot['courtCode'] == court.code}">
-                <div class="card" style="margin: 2px; align-times:center;">
-                <div class="row align-items-center">
-                        <div class="col-sm">
-                            <h5 th:text="${slot['startHour'] + '-' + slot['endHour']}" ></h5>
-                        </div>
-                        <div class="col-sm">
-                            <p>  <svg th:style="|color: ${slot.statusColor};|" xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
-                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
-                            </svg><span th:text="${slot['status']}" ></span></p>
-                        </div>
-                        <div class="col-sm">
-                            <p  th:if="${slot['statusColor'] != 'red' && slot['statusColor'] != 'blue'}" class="btn btn-primary" th:onclick="placeRequestModel([[${slot['slotCode']}]], [[${session.user.id}]], [[${session.user.mobileNo}]], [[${slot['id']}]])" data-bs-toggle="modal" data-bs-target="#modal"> Request Slot </p>
-
-                        </div>
-                    <div class="col-sm">
-                        <div class="col">
-                            Booking Status - Single: <span th:text="${slot['singlesNo']}"></span>
-                        </div>
-                        <div class="col">
-                            Booking Status - Double: <span th:text="${slot['doublesNo']}"></span>
-                        </div>
-                    </div>
+        <!--        <table class="table table-striped " width="80%">-->
+        <!--            <tbody>-->
+        <!--            <tr th:each="court: ${courts}"  class="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">-->
+        <!--                <td style="width: 150px;" th:text="${court.Name+ ' - ' +court.code}"></td>-->
+        <!--                <td th:each="slot :${slots}" th:if="${slot.courtCode == court.code}" style="width: 120px;" th:text="${slot.startHour + '-' + slot.endHour}"></td>-->
+        <!--            </tr>-->
+        <!--            </tbody>-->
+        <!--        </table>-->
+        <div class="container">
+            <div class="row">
+                <!-- Iterate over courts, creating two columns for each row -->
+                <div class="col-md-6" th:each="court, stat: ${courts}">
+                    <!-- Start a new row for every even-indexed court -->
+                    <div th:if="${stat.index % 2 == 0}" class="row">
                     </div>
 
-                </div>
-                <br>
-            </div>
-            </div>
-
-        </div>
-
-    </div>
-    <div class="modal" id="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Complete below to request your slot</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <p style="display: none;" id="MuserId"></p>
-                <p style="display: none;" id="MslotId"></p>
-                <p style="display: none;" id="MslotCode"></p>
-                <p style="display: none;" id="MuserMobile"></p>
-                <div class="modal-body">
-                    <label for="referredBy">Referred By</label>
-                    <select class="form-control" id="referredBy">
-                        <option value="friends">friends</option>
-                        <option value="ads">ads</option>
-                        <option value="other">other</option>
-                    </select>
-                    <label for="gameMode">Game Mode</label>
-                    <select class="form-control" id="gameMode">
-                        <option value="Singles">Singles</option>
-                        <option value="Doubles">Doubles</option>
-                    </select>
-                    <label for="remarks">Remarks</label>
-                    <input type="text" id="remarks" class="form-control">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="placeRequestOK()">Request</button>
+                    <!-- Court details -->
+                    <div class="row">
+                        <div class="col">
+                            <h4 th:text="${court.name + '-' + court.code}" th:onclick="showSlots([[${court.code}]])">
+                                <!-- just for the comment -->
+                            </h4>
+                        </div>
+                    </div>
+                    <hr>
+                    <div th:class="${'container ' + court.code}" style="background-color: #F7F7F9; display: none; padding: 2px;">
+                        <div th:class="${'row'}" th:each="slot :${slots}" th:if="${slot['courtCode'] == court.code}">
+                            <div class="card" style="margin: 2px;">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-6">
+                                        <h5 th:text="${slot['startHour'] + '-' + slot['endHour']}"></h5>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>
+                                            <svg th:style="|color: ${slot.statusColor};|"
+                                                 xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor"
+                                                 class="bi bi-dot" viewBox="0 0 16 16">
+                                                <path
+                                                        d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+                                            </svg><span th:text="${slot['status']}"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p th:if="${slot['statusColor'] != 'red' && slot['statusColor'] != 'blue'}"
+                                           class="btn btn-primary"
+                                           th:onclick="placeRequestModel([[${slot['slotCode']}]], [[${session.user.id}]], [[${session.user.mobileNo}]], [[${slot['id']}]])"
+                                           data-bs-toggle="modal" data-bs-target="#modal"> Request Slot </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col">
+                                                Booking Status - Single: <span th:text="${slot['singlesNo']}"></span>
+                                            </div>
+                                            <div class="col">
+                                                Booking Status - Double: <span th:text="${slot['doublesNo']}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <script>
-    $(document).ready(function() {
-        let params = new URLSearchParams(location.search);
-       // alert(params);
-        console.log(params.get('date'))
-        $("#current-date").html(params.get('date'));
 
-    })
-</script>
+
+        <div class="modal" id="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Complete below to request your slot</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <p style="display: none;" id="MuserId"></p>
+                    <p style="display: none;" id="MslotId"></p>
+                    <p style="display: none;" id="MslotCode"></p>
+                    <p style="display: none;" id="MuserMobile"></p>
+                    <div class="modal-body">
+                        <label for="referredBy">Referred By</label>
+                        <select class="form-control" id="referredBy">
+                            <option value="friends">friends</option>
+                            <option value="ads">ads</option>
+                            <option value="other">other</option>
+                        </select>
+                        <label for="gameMode">Game Mode</label>
+                        <select class="form-control" id="gameMode">
+                            <option value="Singles">Singles</option>
+                            <option value="Doubles">Doubles</option>
+                        </select>
+                        <label for="remarks">Remarks</label>
+                        <input type="text" id="remarks" class="form-control">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="placeRequestOK()">Request</button>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    let params = new URLSearchParams(location.search);
+                    // alert(params);
+                    console.log(params.get('date'))
+                    $("#current-date").html(params.get('date'));
+
+                })
+            </script>
+        </div>
+
     </div>
 
-</div>
-
-<!--main content end-->
+    <!--main content end-->
 </body>
 
 </html>

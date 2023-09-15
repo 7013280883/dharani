@@ -28,9 +28,8 @@ import javax.servlet.http.HttpSession;
 import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class slotController {
@@ -500,7 +499,22 @@ public class slotController {
             // List<User> users = (List<User>) userRepository.findAll();
             List<Slot> slots = slotRepository.findByOrderByIdDesc();
             System.out.println("slots:" + slots);
+            System.out.println("slots:" + slots.size());
+            Set<String> uniqueUsernames = new HashSet<>();
+            List<Slot> filteredUsers = slots.stream()
+                    .filter(user -> uniqueUsernames.add(user.getCourtCode()))
+                    .collect(Collectors.toList());
+            System.out.println("users1:" + filteredUsers);
+            System.out.println("users2:" + filteredUsers.size());
+            List<Slot> filteredUsers1 = slots.stream()
+                    .filter(user -> uniqueUsernames.add(user.getDayType()))
+                    .collect(Collectors.toList());
+            System.out.println("users3:" + filteredUsers1);
+            System.out.println("users4:" + filteredUsers1.size());
+
             model.addAttribute("slot", slots);
+            model.addAttribute("slot1", filteredUsers);
+            model.addAttribute("slot2", filteredUsers1);
             return "admin/slotData";
         }
         List messages = new ArrayList<>();

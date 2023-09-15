@@ -7,49 +7,49 @@
   <title></title>
   <style>
     #username{
-  width:200px;
-  border:1px solid blue;
-  border-radius:2px
-  outline:0;
-  padding:2px;
-  background-colour:#fff;
-  }
-  input#fromDate{
-  width:200px;
-  border:1px solid blue;
-  border-radius:2px
-  outline:0;
-  padding:2px;
-  background-colour:#fff;
-  text-align: center;
-  }
-  input#toDate{
-  width:200px;
-  border:1px solid blue;
-  border-radius:2px
-  outline:0;
-  padding:2px;
-  background-colour:#fff;
-  text-align: center;
-  }
-  #active{
-  width:200px;
-  border:1px solid blue;
-  border-radius:2px
-  outline:0;
-  padding:2px;
-  background-colour:#fff;
-  }
-  body {
-    margin: 0;   /* Remove body margins */
-}
-<!--.css-serial {-->
-<!--  counter-reset: serial-number;  /* Set the serial number counter to 0 */-->
-<!--}-->
-<!--.css-serial td:first-child:before {-->
-<!--  counter-increment: serial-number;  /* Increment the serial number counter */-->
-<!--  content: counter(serial-number);  /* Display the counter */-->
-<!--}-->
+      width:200px;
+      border:1px solid blue;
+      border-radius:2px
+      outline:0;
+      padding:2px;
+      background-colour:#fff;
+    }
+    input#fromDate{
+      width:200px;
+      border:1px solid blue;
+      border-radius:2px
+      outline:0;
+      padding:2px;
+      background-colour:#fff;
+      text-align: center;
+    }
+    input#toDate{
+      width:200px;
+      border:1px solid blue;
+      border-radius:2px
+      outline:0;
+      padding:2px;
+      background-colour:#fff;
+      text-align: center;
+    }
+    #active{
+      width:200px;
+      border:1px solid blue;
+      border-radius:2px
+      outline:0;
+      padding:2px;
+      background-colour:#fff;
+    }
+    body {
+      margin: 0;   /* Remove body margins */
+    }
+    <!--.css-serial {-->
+        <!--  counter-reset: serial-number;  /* Set the serial number counter to 0 */-->
+        <!--}-->
+    <!--.css-serial td:first-child:before {-->
+        <!--  counter-increment: serial-number;  /* Increment the serial number counter */-->
+        <!--  content: counter(serial-number);  /* Display the counter */-->
+        <!--}-->
 
   </style>
   <div class="container">
@@ -68,14 +68,14 @@
         <label for="courtCode">courtCode</label>
         <select id="courtCode" class="form-control" name="courtCode">
           <option value="all">all</option>
-          <option th:each="i : ${slot}" th:value="${i.courtCode}"><span th:text="${i.courtCode}"></span></option>
+          <option th:each="i : ${slot1}" th:value="${i.courtCode}"><span th:text="${i.courtCode}"></span></option>
         </select>
       </div>
       <div class="col">
         <label for="dayType">Day Type</label>
         <select id="dayType" class="form-control" name="dayType">
           <option value="all">all</option>
-          <option th:each="i : ${slot}" th:value="${i.dayType}"><span th:text="${i.dayType}"></span></option>
+          <option th:each="i : ${slot2}" th:value="${i.dayType}"><span th:text="${i.dayType}"></span></option>
         </select>
       </div>
 
@@ -116,66 +116,66 @@
   </div>
   <script>
 
- $('#getData').click(function() {
+    $('#getData').click(function() {
 
-var courtCode = $("#courtCode").val();
-var dayType = $("#dayType").val();
+      var courtCode = $("#courtCode").val();
+      var dayType = $("#dayType").val();
 
-$("#purchaseTable tbody tr").remove();
+      $("#purchaseTable tbody tr").remove();
 
-$.ajax({
-async:'false',
- type: 'POST',
- url: '/slotData',
-      data: {
-     "courtCode":courtCode,
-     "dayType":dayType,
+      $.ajax({
+        async:'false',
+        type: 'POST',
+        url: '/slotData',
+        data: {
+          "courtCode":courtCode,
+          "dayType":dayType,
 
 
-      },
-       success: function(data) {
+        },
+        success: function(data) {
 
- const jsonObject = JSON.parse(data);
-    var tr = '';
-    $.each(jsonObject, function(i, item) {
-tr += '<tr><td>' + item.slotCode + '</td><td>' + item.courtCode + '</td><td>' + item.dayType + '</td><td>' + item.startHour + '</td><td>' + item.endHour + '</td><td>' + item.slotLength + '</td>tr>';
+          const jsonObject = JSON.parse(data);
+          var tr = '';
+          $.each(jsonObject, function(i, item) {
+            tr += '<tr><td>' + item.slotCode + '</td><td>' + item.courtCode + '</td><td>' + item.dayType + '</td><td>' + item.startHour + '</td><td>' + item.endHour + '</td><td>' + item.slotLength + '</td>tr>';
+          });
+          console.log(tr);
+          $('#purchaseTable').append(tr);
+          $('#notfound').hide();
+          const isEmpty = document.querySelectorAll("#purchaseTable tr").length <= 1;
+          if(isEmpty==true){
+
+            $('#notfound').show();
+          }
+
+        }
+      });
     });
-   console.log(tr);
-   $('#purchaseTable').append(tr);
-   $('#notfound').hide();
-const isEmpty = document.querySelectorAll("#purchaseTable tr").length <= 1;
-if(isEmpty==true){
 
-$('#notfound').show();
-}
+    $(document).ready(function() {
+      var courtCode = $("#courtCode").val();
+      var dayType = $("#dayType").val();
 
-}
-});
-});
-
-$(document).ready(function() {
-var courtCode = $("#courtCode").val();
-var dayType = $("#dayType").val();
-
-$('#pdfDownload').click(function() {
-var courtCode = $("#courtCode").val();
-var dayType = $("#dayType").val();
-window.location.href="/slotPdfData1?courtCode="+ courtCode  +"&dayType="+dayType
-});
-});
+      $('#pdfDownload').click(function() {
+        var courtCode = $("#courtCode").val();
+        var dayType = $("#dayType").val();
+        window.location.href="/slotPdfData1?courtCode="+ courtCode  +"&dayType="+dayType
+      });
+    });
 
 
-$(document).ready(function() {
-var courtCode = $("#courtCode").val();
-var dayType = $("#dayType").val();
-$('#downloadExcel').click(function() {
-var courtCode = $("#courtCode").val();
-var dayType = $("#dayType").val();
+    $(document).ready(function() {
+      var courtCode = $("#courtCode").val();
+      var dayType = $("#dayType").val();
+      $('#downloadExcel').click(function() {
+        var courtCode = $("#courtCode").val();
+        var dayType = $("#dayType").val();
 
-window.location.href="/slotExcelData1?courtCode="+ courtCode  +"&dayType="+dayType});
-});
+        window.location.href="/slotExcelData1?courtCode="+ courtCode  +"&dayType="+dayType});
+    });
 
-</script>
+  </script>
 </div>
 </body>
 
